@@ -1,80 +1,187 @@
-import Image from 'next/image'
+'use client'
+
+import styled from 'styled-components'
 
 export default function Home() {
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm sm:text-left">
-          <li className="mb-2">
-            Get started by editing{' '}
-            <code className="rounded bg-black/[.05] px-1 py-0.5 font-semibold dark:bg-white/[.06]">app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Container>
+      {/* 상단 네비게이션 바 */}
+      <Header>
+        <Logo>MyShoppingMall</Logo>
+        <Nav>
+          <a href="/auth?type=login">로그인</a>
+          <a href="/auth?type=sign-up">회원가입</a>
+        </Nav>
+      </Header>
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
-          <a
-            className="flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent bg-foreground px-4 text-sm text-background transition-colors hover:bg-[#383838] sm:h-12 sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="flex h-10 items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-6">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="https://nextjs.org/icons/file.svg" alt="File icon" width={16} height={16} />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="https://nextjs.org/icons/window.svg" alt="Window icon" width={16} height={16} />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="https://nextjs.org/icons/globe.svg" alt="Globe icon" width={16} height={16} />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      {/* 메인 상품 홍보 배너 (Hero Section) */}
+      <HeroSection>
+        <BannerImageWrapper>
+          {/* 임시 배너 이미지 */}
+          <img
+            src="https://picsum.photos/seed/promo/1920/600"
+            alt="Promotion Banner"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          <BannerContent>
+            <Title>여름 맞이 특가 할인!</Title>
+            <Subtitle>지금 바로 이번 시즌 최고의 상품들을 만나보세요.</Subtitle>
+            <ShopNowButton>지금 보러가기</ShopNowButton>
+          </BannerContent>
+        </BannerImageWrapper>
+      </HeroSection>
+
+      {/* 상품 리스트 섹션 */}
+      <ProductList>
+        <h2>추천 상품</h2>
+        <Grid>
+          {/* 4개의 임시 상품 카드를 생성합니다 */}
+          {[1, 2, 3, 4].map((item) => (
+            <ProductCard key={item}>
+              <ProductImage src={`https://picsum.photos/seed/${item * 10}/300/300`} alt={`Product ${item}`} />
+              <ProductName>트렌디한 아이템 {item}</ProductName>
+              <ProductPrice>₩ {(item * 15000).toLocaleString()}</ProductPrice>
+            </ProductCard>
+          ))}
+        </Grid>
+      </ProductList>
+    </Container>
   )
 }
+
+/* Styled Components */
+const Container = styled.div`
+  min-height: 100vh;
+  background-color: #f9f9f9;
+`
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`
+
+const Logo = styled.h1`
+  font-size: 1.5rem;
+  color: #2d3748;
+  font-weight: bold;
+  margin: 0;
+`
+
+const Nav = styled.nav`
+  a {
+    margin-left: 1rem;
+    color: #4a5568;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: #3182ce;
+    }
+  }
+`
+
+const HeroSection = styled.section`
+  width: 100%;
+  height: 500px;
+  position: relative;
+  background-color: #e2e8f0;
+`
+
+const BannerImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`
+
+const BannerContent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* 텍스트 가독성을 위해 어두운 배경 추가 */
+  padding: 2.5rem;
+  border-radius: 12px;
+`
+
+const Title = styled.h2`
+  font-size: 2.5rem;
+  margin: 0 0 1rem 0;
+`
+
+const Subtitle = styled.p`
+  font-size: 1.25rem;
+  margin: 0 0 2rem 0;
+`
+
+const ShopNowButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #e53e3e;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #c53030;
+  }
+`
+
+const ProductList = styled.section`
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #2d3748;
+    text-align: center;
+  }
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+`
+
+const ProductCard = styled.div`
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+`
+
+const ProductImage = styled.img`
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+`
+
+const ProductName = styled.h3`
+  font-size: 1.2rem;
+  margin: 1rem;
+  color: #2d3748;
+`
+
+const ProductPrice = styled.p`
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 1rem 1.5rem;
+  color: #e53e3e;
+`
