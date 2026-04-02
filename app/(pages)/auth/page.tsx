@@ -87,9 +87,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem 1rem;
-  background:
-    radial-gradient(circle at top, rgba(245, 158, 11, 0.18), transparent 30%),
-    linear-gradient(180deg, #fff7ed 0%, #f8fafc 55%, #eef2ff 100%);
+  background: radial-gradient(circle at top, rgba(0, 0, 0, 0.03), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #fafafa 52%, #f3f4f6 100%);
 `
 
 const LoginBox = styled.div`
@@ -97,14 +96,15 @@ const LoginBox = styled.div`
   padding: 2rem;
   border-radius: 24px;
   background: white;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 `
 
 const Brand = styled.div`
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #b45309;
+  color: #525252;
   text-transform: uppercase;
 `
 
@@ -125,7 +125,7 @@ const InputField = styled.input`
   margin-bottom: 1rem;
   border: 1px solid #d1d5db;
   border-radius: 14px;
-  background: #f9fafb;
+  background: #fafafa;
   font-size: 1rem;
 `
 
@@ -134,7 +134,7 @@ const LoginButton = styled.button`
   padding: 1rem;
   border: none;
   border-radius: 16px;
-  background: linear-gradient(135deg, #111827, #374151);
+  background: linear-gradient(135deg, #3f3f46, #18181b);
   color: white;
   font-size: 1rem;
   font-weight: 700;
@@ -148,7 +148,7 @@ const Links = styled.div`
   gap: 0.75rem;
 
   a {
-    color: #2563eb;
+    color: #3f3f46;
     text-decoration: none;
     font-weight: 600;
   }

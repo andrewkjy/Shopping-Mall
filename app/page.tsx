@@ -7,25 +7,25 @@ const featuredProducts = [
     name: 'Spring Layered Jacket',
     price: '79,000원',
     tag: 'BEST',
-    tone: 'linear-gradient(135deg, #f5d0a9, #fef3c7)',
+    tone: 'linear-gradient(135deg, #f5f5f5, #e5e7eb)',
   },
   {
     name: 'Classic Leather Bag',
     price: '92,000원',
     tag: 'NEW',
-    tone: 'linear-gradient(135deg, #c7d2fe, #e0f2fe)',
+    tone: 'linear-gradient(135deg, #f3f4f6, #d1d5db)',
   },
   {
     name: 'Daily Sneakers',
     price: '64,000원',
     tag: 'HOT',
-    tone: 'linear-gradient(135deg, #fecdd3, #ffe4e6)',
+    tone: 'linear-gradient(135deg, #fafafa, #e5e7eb)',
   },
   {
     name: 'Minimal Table Lamp',
     price: '48,000원',
     tag: 'MD PICK',
-    tone: 'linear-gradient(135deg, #bbf7d0, #ecfccb)',
+    tone: 'linear-gradient(135deg, #f9fafb, #d4d4d8)',
   },
 ]
 
@@ -48,8 +48,7 @@ export default function Home() {
             <Eyebrow>NEW SEASON CURATION</Eyebrow>
             <Title>오늘의 무드에 맞는 쇼핑을 시작해보세요.</Title>
             <Description>
-              이번 시즌 인기 아이템과 새로 들어온 상품을 한눈에 둘러보고, 원하는 스타일을
-              빠르게 찾아보세요.
+              이번 시즌 인기 아이템과 새로 들어온 상품을 한눈에 둘러보고, 원하는 스타일을 빠르게 찾아보세요.
             </Description>
 
             <CategoryRow>
@@ -63,8 +62,7 @@ export default function Home() {
             <PanelLabel>이번 주 추천</PanelLabel>
             <PanelTitle>가볍게 바꾸는 봄 스타일</PanelTitle>
             <PanelDescription>
-              데일리 아우터, 포인트 백, 라이프스타일 소품까지 지금 많이 찾는 조합으로
-              구성했어요.
+              데일리 아우터, 포인트 백, 라이프스타일 소품까지 지금 많이 찾는 조합으로 구성했어요.
             </PanelDescription>
             <PanelStats>
               <StatCard>
@@ -104,10 +102,9 @@ export default function Home() {
 
 const PageShell = styled.div`
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(251, 191, 36, 0.18), transparent 20%),
-    radial-gradient(circle at bottom right, rgba(125, 211, 252, 0.2), transparent 22%),
-    linear-gradient(180deg, #fffaf2 0%, #f8fafc 48%, #eef6ff 100%);
+  background: radial-gradient(circle at top left, rgba(0, 0, 0, 0.03), transparent 18%),
+    radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.04), transparent 22%),
+    linear-gradient(180deg, #ffffff 0%, #fcfcfc 50%, #f5f5f5 100%);
 `
 
 const Header = styled.header`
@@ -156,14 +153,15 @@ const HeroSection = styled.section`
 const HeroText = styled.div`
   padding: 3rem;
   border-radius: 36px;
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #ececec;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(10px);
 `
 
 const Eyebrow = styled.p`
   margin: 0;
-  color: #c2410c;
+  color: #525252;
   font-size: 0.88rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -195,18 +193,18 @@ const CategoryRow = styled.div`
 const CategoryChip = styled.span`
   padding: 0.8rem 1rem;
   border-radius: 999px;
-  background: #ffffff;
-  color: #1e293b;
+  background: #fafafa;
+  color: #262626;
   font-weight: 700;
-  box-shadow: inset 0 0 0 1px #e2e8f0;
+  box-shadow: inset 0 0 0 1px #e5e5e5;
 `
 
 const HeroPanel = styled.aside`
   padding: 2rem;
   border-radius: 32px;
-  background: linear-gradient(160deg, #111827 0%, #1d4ed8 100%);
+  background: linear-gradient(160deg, #3f3f46 0%, #18181b 100%);
   color: white;
-  box-shadow: 0 24px 60px rgba(30, 41, 59, 0.2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
 `
 
 const PanelLabel = styled.p`
@@ -295,8 +293,9 @@ const ProductGrid = styled.section`
 const ProductCard = styled.article`
   overflow: hidden;
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #ececec;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.06);
 `
 
 const ProductVisual = styled.div<{ $tone: string }>`
@@ -311,7 +310,7 @@ const Badge = styled.span`
   left: 1rem;
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.82);
+  background: rgba(24, 24, 27, 0.88);
   color: white;
   font-size: 0.78rem;
   font-weight: 800;
@@ -330,7 +329,7 @@ const ProductName = styled.h4`
 
 const ProductPrice = styled.p`
   margin: 0.5rem 0 0;
-  color: #2563eb;
+  color: #404040;
   font-size: 1rem;
   font-weight: 800;
 `

@@ -43,14 +43,15 @@ const ForgetPasswordBox = styled.div`
   padding: 2rem;
   border-radius: 24px;
   background: white;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 `
 
 const Brand = styled.div`
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #b45309;
+  color: #525252;
   text-transform: uppercase;
 `
 
@@ -71,7 +72,7 @@ const InputField = styled.input`
   margin-bottom: 1rem;
   border: 1px solid #d1d5db;
   border-radius: 14px;
-  background: #f9fafb;
+  background: #fafafa;
   font-size: 1rem;
 `
 
@@ -80,7 +81,7 @@ const SendCodeButton = styled.button`
   padding: 1rem;
   border: none;
   border-radius: 16px;
-  background: linear-gradient(135deg, #111827, #374151);
+  background: linear-gradient(135deg, #3f3f46, #18181b);
   color: white;
   font-size: 1rem;
   font-weight: 700;

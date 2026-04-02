@@ -62,12 +62,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f4f8;
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
   max-width: 500px;
   margin: 40px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
 `
 
 const Title = styled.h1`
@@ -85,13 +86,13 @@ const Input = styled.input`
   border-radius: 5px;
   margin-bottom: 20px;
   &:focus {
-    border-color: #0070f3;
+    border-color: #52525b;
     outline: none;
   }
 `
 
 const Button = styled.button`
-  background-color: #0070f3;
+  background-color: #3f3f46;
   color: white;
   padding: 10px 20px;
   font-size: 16px;
@@ -100,7 +101,7 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: #005bb5;
+    background-color: #27272a;
   }
 `
 
@@ -114,8 +115,9 @@ const UserDataContainer = styled.div`
   margin-top: 30px;
   background-color: #fff;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
   width: 100%;
   max-width: 400px;
 `

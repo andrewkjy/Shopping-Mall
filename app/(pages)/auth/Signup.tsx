@@ -59,20 +59,19 @@ export default function SignUp() {
     setMessageTone(tone)
   }
 
-  const handleChange =
-    (field: keyof FormState) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setForm((prev) => ({
-        ...prev,
-        [field]: event.target.value,
-      }))
+  const handleChange = (field: keyof FormState) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: event.target.value,
+    }))
 
-      if (field === 'username') {
-        setIdChecked(false)
-        setIdAvailable(false)
-      }
-
-      setStatusMessage('', 'neutral')
+    if (field === 'username') {
+      setIdChecked(false)
+      setIdAvailable(false)
     }
+
+    setStatusMessage('', 'neutral')
+  }
 
   const handleCheckDuplicate = async () => {
     const username = form.username.trim()
@@ -265,14 +264,15 @@ const SignUpBox = styled.form`
   padding: 2rem;
   border-radius: 24px;
   background: white;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 `
 
 const Brand = styled.div`
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #b45309;
+  color: #525252;
   text-transform: uppercase;
 `
 
@@ -314,7 +314,7 @@ const Input = styled.input`
   padding: 0.9rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 14px;
-  background: #f9fafb;
+  background: #fafafa;
   font-size: 1rem;
   color: #111827;
 `
@@ -324,7 +324,7 @@ const TextArea = styled.textarea`
   padding: 0.9rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 14px;
-  background: #f9fafb;
+  background: #fafafa;
   font-size: 1rem;
   color: #111827;
   resize: vertical;
@@ -334,7 +334,7 @@ const CheckButton = styled.button`
   padding: 0.9rem 1rem;
   border: none;
   border-radius: 14px;
-  background: #d97706;
+  background: #52525b;
   color: white;
   font-weight: 700;
   cursor: pointer;
@@ -351,7 +351,7 @@ const SignUpButton = styled.button`
   padding: 1rem;
   border: none;
   border-radius: 16px;
-  background: linear-gradient(135deg, #111827, #374151);
+  background: linear-gradient(135deg, #3f3f46, #18181b);
   color: white;
   font-size: 1rem;
   font-weight: 700;
@@ -365,7 +365,7 @@ const SignUpButton = styled.button`
 
 const InlineWarning = styled.p`
   margin: -0.25rem 0 1rem;
-  color: #dc2626;
+  color: #52525b;
   font-size: 0.9rem;
 `
 
@@ -379,10 +379,8 @@ const StatusMessage = styled.p<{ $tone: 'success' | 'error' | 'neutral' }>`
   margin: 0 0 1rem;
   padding: 0.85rem 1rem;
   border-radius: 14px;
-  background: ${({ $tone }) =>
-    $tone === 'success' ? '#ecfdf5' : $tone === 'error' ? '#fef2f2' : '#f3f4f6'};
-  color: ${({ $tone }) =>
-    $tone === 'success' ? '#047857' : $tone === 'error' ? '#b91c1c' : '#374151'};
+  background: ${({ $tone }) => ($tone === 'success' ? '#f5f5f5' : $tone === 'error' ? '#eeeeee' : '#f5f5f5')};
+  color: ${({ $tone }) => ($tone === 'success' ? '#3f3f46' : $tone === 'error' ? '#18181b' : '#3f3f46')};
   font-size: 0.95rem;
 `
 
@@ -391,7 +389,7 @@ const Links = styled.div`
   text-align: center;
 
   a {
-    color: #2563eb;
+    color: #3f3f46;
     text-decoration: none;
     font-weight: 600;
   }
