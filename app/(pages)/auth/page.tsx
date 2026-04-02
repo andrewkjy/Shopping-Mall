@@ -1,179 +1,161 @@
-'use client'
+﻿'use client'
 
-import { useState, Suspense } from 'react'
+import { Suspense, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import styled from 'styled-components'
 import SignUp from './Signup'
 import ForgetPassword from './ForgetPass'
-import { Gaitwise } from '@/public/svg'
-import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
 
 function AuthContent() {
-  const searchParams = useSearchParams() // URLのクエリパラメータを取得
-  const type = searchParams.get('type') // 'type' クエリパラメータを取得
-
+  const searchParams = useSearchParams()
+  const type = searchParams.get('type')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState('analyst')
 
   const handleLogin = async () => {
-    const res = await fetch('/api/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password, role }),
+      body: JSON.stringify({ username, password }),
     })
 
-    if (res.ok) {
-      alert('ログイン成功')
-    } else {
-      alert('ログイン失敗')
-    }
+    alert(response.ok ? '로그인에 성공했습니다.' : '로그인에 실패했습니다.')
+  }
+
+  if (type === 'sign-up') {
+    return (
+      <Container>
+        <SignUp />
+      </Container>
+    )
+  }
+
+  if (type === 'forgetpass') {
+    return (
+      <Container>
+        <ForgetPassword />
+      </Container>
+    )
   }
 
   return (
     <Container>
-      {type === 'login' && (
-        <LoginBox>
-          <Image src={Gaitwise} alt="logo" width={100} height={100} layout="responsive" />
-          <Title>Hi, Welcome Back!</Title>
-          <Subtitle>Please select a Type</Subtitle>
+      <LoginBox>
+        <Brand>MyShoppingMall</Brand>
+        <Title>로그인</Title>
+        <Subtitle>가입한 아이디와 비밀번호로 로그인하세요.</Subtitle>
 
-          <RoleSelect>
-            <label>
-              <input
-                type="radio"
-                name="role"
-                value="analyst"
-                checked={role === 'analyst'}
-                onChange={(e) => setRole(e.target.value)}
-              />
-              Analysts
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="role"
-                value="doctor"
-                checked={role === 'doctor'}
-                onChange={(e) => setRole(e.target.value)}
-              />
-              Doctor
-            </label>
-          </RoleSelect>
+        <InputField
+          type="text"
+          placeholder="아이디"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
+        <InputField
+          type="password"
+          placeholder="비밀번호"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
 
-          <InputField
-            type="email"
-            placeholder="Your Email"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <InputField
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <LoginButton type="button" onClick={handleLogin}>
+          로그인
+        </LoginButton>
 
-          <LoginButton onClick={handleLogin}>Sign In</LoginButton>
-
-          <Links>
-            <a href="/auth?type=forgetpass">Forgot password?</a>
-            <p>
-              Don’t have an account yet? <a href="/auth?type=sign-up">Sign up</a>
-            </p>
-          </Links>
-        </LoginBox>
-      )}
-
-      {type === 'sign-up' && <SignUp />}
-
-      {type === 'forgetpass' && <ForgetPassword />}
+        <Links>
+          <a href="/auth?type=forgetpass">비밀번호를 잊으셨나요?</a>
+          <a href="/auth?type=sign-up">회원가입 하러가기</a>
+        </Links>
+      </LoginBox>
     </Container>
   )
 }
 
 export default function AuthPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Fallback>불러오는 중...</Fallback>}>
       <AuthContent />
     </Suspense>
   )
 }
 
 const Container = styled.div`
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f0f4f8;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(circle at top, rgba(245, 158, 11, 0.18), transparent 30%),
+    linear-gradient(180deg, #fff7ed 0%, #f8fafc 55%, #eef2ff 100%);
 `
 
 const LoginBox = styled.div`
-  background: white;
+  width: min(100%, 420px);
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 350px;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+`
+
+const Brand = styled.div`
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #b45309;
+  text-transform: uppercase;
 `
 
 const Title = styled.h2`
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0;
+  font-size: 2rem;
+  color: #111827;
 `
 
 const Subtitle = styled.p`
-  color: #666;
-  margin-bottom: 1.5rem;
-`
-
-const RoleSelect = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-
-  label {
-    margin: 0 1rem;
-    font-size: 1rem;
-  }
+  margin: 0.5rem 0 1.5rem;
+  color: #6b7280;
 `
 
 const InputField = styled.input`
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.9rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  background: #f9fafb;
   font-size: 1rem;
-  background-color: #f9f9f9;
 `
 
 const LoginButton = styled.button`
   width: 100%;
-  padding: 0.75rem;
-  background-color: #2d3748;
-  color: white;
+  padding: 1rem;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #111827, #374151);
+  color: white;
   font-size: 1rem;
-
-  &:hover {
-    background-color: #1a202c;
-  }
+  font-weight: 700;
+  cursor: pointer;
 `
 
 const Links = styled.div`
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 
   a {
-    color: #3182ce;
+    color: #2563eb;
     text-decoration: none;
+    font-weight: 600;
   }
+`
 
-  a:hover {
-    text-decoration: underline;
-  }
+const Fallback = styled.div`
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
 `

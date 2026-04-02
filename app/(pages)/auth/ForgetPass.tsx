@@ -1,82 +1,88 @@
-'use client'
+﻿'use client'
 
-import { Gaitwise } from '@/public/svg'
-import Image from 'next/image'
 import { useState } from 'react'
 import styled from 'styled-components'
 
 export default function ForgetPassword() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
 
   const handleSendCode = async () => {
-    const res = await fetch('/api/forgot-password', {
+    const response = await fetch('/api/forgot-password', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ username }),
     })
 
-    if (res.ok) {
-      alert('確認コードが送信されました')
-    } else {
-      alert('コードの送信に失敗しました')
-    }
+    alert(response.ok ? '재설정 안내를 전송했습니다.' : '재설정 요청에 실패했습니다.')
   }
 
   return (
     <ForgetPasswordBox>
-      <Image src={Gaitwise} alt="logo" width={100} height={100} layout="responsive" />
-      <Title>비밀번호를 잊어버리셨나요?</Title>
-      <Subtitle>이메일 주소를 입력해 주세요. 확인 코드를 보내드립니다.</Subtitle>
+      <Brand>MyShoppingMall</Brand>
+      <Title>비밀번호 찾기</Title>
+      <Subtitle>가입한 아이디를 입력하면 재설정 안내를 보낼 수 있습니다.</Subtitle>
 
-      <InputField type="email" placeholder="이메일 입력" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <InputField
+        type="text"
+        placeholder="아이디를 입력하세요"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+      />
 
-      <SendCodeButton onClick={handleSendCode}>Send code</SendCodeButton>
+      <SendCodeButton type="button" onClick={handleSendCode}>
+        재설정 요청
+      </SendCodeButton>
     </ForgetPasswordBox>
   )
 }
 
 const ForgetPasswordBox = styled.div`
-  background: white;
+  width: min(100%, 420px);
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 350px;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+`
+
+const Brand = styled.div`
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #b45309;
+  text-transform: uppercase;
 `
 
 const Title = styled.h2`
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0;
+  font-size: 2rem;
+  color: #111827;
 `
 
 const Subtitle = styled.p`
-  color: #666;
-  margin-bottom: 1.5rem;
+  margin: 0.5rem 0 1.5rem;
+  color: #6b7280;
 `
 
 const InputField = styled.input`
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.9rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  background: #f9fafb;
   font-size: 1rem;
-  background-color: #f9f9f9;
 `
 
 const SendCodeButton = styled.button`
   width: 100%;
-  padding: 0.75rem;
-  background-color: #2d3748;
-  color: white;
+  padding: 1rem;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #111827, #374151);
+  color: white;
   font-size: 1rem;
-
-  &:hover {
-    background-color: #1a202c;
-  }
+  font-weight: 700;
+  cursor: pointer;
 `

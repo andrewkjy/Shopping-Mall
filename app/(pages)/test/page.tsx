@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
@@ -22,7 +22,7 @@ export default function Page() {
 
       const data = res.data
       if (res.status === 200) {
-        setResult(data.message) // API로부터의 메시지 설정
+        setResult(data.message) // API로부터 결과 메시지 설정
         setUserData(data.user || null) // user 데이터가 존재하면 설정
       } else {
         setResult('닉네임 확인에 실패했습니다.')
