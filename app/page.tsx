@@ -1,187 +1,336 @@
-'use client'
+﻿'use client'
 
 import styled from 'styled-components'
 
+const featuredProducts = [
+  {
+    name: 'Spring Layered Jacket',
+    price: '79,000원',
+    tag: 'BEST',
+    tone: 'linear-gradient(135deg, #f5d0a9, #fef3c7)',
+  },
+  {
+    name: 'Classic Leather Bag',
+    price: '92,000원',
+    tag: 'NEW',
+    tone: 'linear-gradient(135deg, #c7d2fe, #e0f2fe)',
+  },
+  {
+    name: 'Daily Sneakers',
+    price: '64,000원',
+    tag: 'HOT',
+    tone: 'linear-gradient(135deg, #fecdd3, #ffe4e6)',
+  },
+  {
+    name: 'Minimal Table Lamp',
+    price: '48,000원',
+    tag: 'MD PICK',
+    tone: 'linear-gradient(135deg, #bbf7d0, #ecfccb)',
+  },
+]
+
+const categories = ['여성', '남성', '가방', '신발', '리빙', '세일']
+
 export default function Home() {
   return (
-    <Container>
-      {/* 상단 네비게이션 바 */}
+    <PageShell>
       <Header>
         <Logo>MyShoppingMall</Logo>
-        <Nav>
-          <a href="/auth?type=login">로그인</a>
-          <a href="/auth?type=sign-up">회원가입</a>
-        </Nav>
+        <TopActions>
+          <TopLink href="/auth?type=login">로그인</TopLink>
+          <TopLink href="/auth?type=sign-up">회원가입</TopLink>
+        </TopActions>
       </Header>
 
-      {/* 메인 상품 홍보 배너 (Hero Section) */}
-      <HeroSection>
-        <BannerImageWrapper>
-          {/* 임시 배너 이미지 */}
-          <img
-            src="https://picsum.photos/seed/promo/1920/600"
-            alt="Promotion Banner"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-          <BannerContent>
-            <Title>여름 맞이 특가 할인!</Title>
-            <Subtitle>지금 바로 이번 시즌 최고의 상품들을 만나보세요.</Subtitle>
-            <ShopNowButton>지금 보러가기</ShopNowButton>
-          </BannerContent>
-        </BannerImageWrapper>
-      </HeroSection>
+      <MainContent>
+        <HeroSection>
+          <HeroText>
+            <Eyebrow>NEW SEASON CURATION</Eyebrow>
+            <Title>오늘의 무드에 맞는 쇼핑을 시작해보세요.</Title>
+            <Description>
+              이번 시즌 인기 아이템과 새로 들어온 상품을 한눈에 둘러보고, 원하는 스타일을
+              빠르게 찾아보세요.
+            </Description>
 
-      {/* 상품 리스트 섹션 */}
-      <ProductList>
-        <h2>추천 상품</h2>
-        <Grid>
-          {/* 4개의 임시 상품 카드를 생성합니다 */}
-          {[1, 2, 3, 4].map((item) => (
-            <ProductCard key={item}>
-              <ProductImage src={`https://picsum.photos/seed/${item * 10}/300/300`} alt={`Product ${item}`} />
-              <ProductName>트렌디한 아이템 {item}</ProductName>
-              <ProductPrice>₩ {(item * 15000).toLocaleString()}</ProductPrice>
+            <CategoryRow>
+              {categories.map((category) => (
+                <CategoryChip key={category}>{category}</CategoryChip>
+              ))}
+            </CategoryRow>
+          </HeroText>
+
+          <HeroPanel>
+            <PanelLabel>이번 주 추천</PanelLabel>
+            <PanelTitle>가볍게 바꾸는 봄 스타일</PanelTitle>
+            <PanelDescription>
+              데일리 아우터, 포인트 백, 라이프스타일 소품까지 지금 많이 찾는 조합으로
+              구성했어요.
+            </PanelDescription>
+            <PanelStats>
+              <StatCard>
+                <strong>24h</strong>
+                <span>빠른 인기 업데이트</span>
+              </StatCard>
+              <StatCard>
+                <strong>3,200+</strong>
+                <span>이번 주 조회수</span>
+              </StatCard>
+            </PanelStats>
+          </HeroPanel>
+        </HeroSection>
+
+        <SectionHeader>
+          <SectionTitle>추천 상품</SectionTitle>
+          <SectionCaption>메인 홈에서 바로 둘러볼 수 있는 대표 아이템</SectionCaption>
+        </SectionHeader>
+
+        <ProductGrid>
+          {featuredProducts.map((product) => (
+            <ProductCard key={product.name}>
+              <ProductVisual $tone={product.tone}>
+                <Badge>{product.tag}</Badge>
+              </ProductVisual>
+              <ProductInfo>
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}</ProductPrice>
+              </ProductInfo>
             </ProductCard>
           ))}
-        </Grid>
-      </ProductList>
-    </Container>
+        </ProductGrid>
+      </MainContent>
+    </PageShell>
   )
 }
 
-/* Styled Components */
-const Container = styled.div`
+const PageShell = styled.div`
   min-height: 100vh;
-  background-color: #f9f9f9;
+  background:
+    radial-gradient(circle at top left, rgba(251, 191, 36, 0.18), transparent 20%),
+    radial-gradient(circle at bottom right, rgba(125, 211, 252, 0.2), transparent 22%),
+    linear-gradient(180deg, #fffaf2 0%, #f8fafc 48%, #eef6ff 100%);
 `
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 2rem;
 `
 
 const Logo = styled.h1`
-  font-size: 1.5rem;
-  color: #2d3748;
-  font-weight: bold;
   margin: 0;
+  color: #111827;
+  font-size: 1.8rem;
+  font-weight: 800;
 `
 
-const Nav = styled.nav`
-  a {
-    margin-left: 1rem;
-    color: #4a5568;
-    text-decoration: none;
-    font-weight: 500;
+const TopActions = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+`
 
-    &:hover {
-      color: #3182ce;
-    }
-  }
+const TopLink = styled.a`
+  color: #111827;
+  text-decoration: none;
+  font-weight: 700;
+`
+
+const MainContent = styled.main`
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1rem 0 4rem;
 `
 
 const HeroSection = styled.section`
-  width: 100%;
-  height: 500px;
-  position: relative;
-  background-color: #e2e8f0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 1.5rem;
+  align-items: stretch;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
 `
 
-const BannerImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
+const HeroText = styled.div`
+  padding: 3rem;
+  border-radius: 36px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
 `
 
-const BannerContent = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5); /* 텍스트 가독성을 위해 어두운 배경 추가 */
-  padding: 2.5rem;
-  border-radius: 12px;
+const Eyebrow = styled.p`
+  margin: 0;
+  color: #c2410c;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 `
 
 const Title = styled.h2`
-  font-size: 2.5rem;
-  margin: 0 0 1rem 0;
+  margin: 1rem 0 0;
+  color: #0f172a;
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  line-height: 1.02;
 `
 
-const Subtitle = styled.p`
-  font-size: 1.25rem;
-  margin: 0 0 2rem 0;
+const Description = styled.p`
+  margin: 1.25rem 0 0;
+  max-width: 640px;
+  color: #475569;
+  font-size: 1.08rem;
+  line-height: 1.8;
 `
 
-const ShopNowButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  font-weight: bold;
+const CategoryRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+`
+
+const CategoryChip = styled.span`
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1e293b;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px #e2e8f0;
+`
+
+const HeroPanel = styled.aside`
+  padding: 2rem;
+  border-radius: 32px;
+  background: linear-gradient(160deg, #111827 0%, #1d4ed8 100%);
   color: white;
-  background-color: #e53e3e;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #c53030;
-  }
+  box-shadow: 0 24px 60px rgba(30, 41, 59, 0.2);
 `
 
-const ProductList = styled.section`
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #2d3748;
-    text-align: center;
-  }
+const PanelLabel = styled.p`
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  font-weight: 700;
 `
 
-const Grid = styled.div`
+const PanelTitle = styled.h3`
+  margin: 0.75rem 0 0;
+  font-size: 2rem;
+  line-height: 1.15;
+`
+
+const PanelDescription = styled.p`
+  margin: 1rem 0 0;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.7;
+`
+
+const PanelStats = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 2rem;
 `
 
-const ProductCard = styled.div`
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+const StatCard = styled.div`
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  strong {
+    display: block;
+    font-size: 1.35rem;
+  }
+
+  span {
+    display: block;
+    margin-top: 0.35rem;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.92rem;
   }
 `
 
-const ProductImage = styled.img`
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
+const SectionHeader = styled.div`
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    align-items: start;
+  }
 `
 
-const ProductName = styled.h3`
-  font-size: 1.2rem;
-  margin: 1rem;
-  color: #2d3748;
+const SectionTitle = styled.h3`
+  margin: 0;
+  color: #0f172a;
+  font-size: 2rem;
+`
+
+const SectionCaption = styled.p`
+  margin: 0;
+  color: #64748b;
+`
+
+const ProductGrid = styled.section`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const ProductCard = styled.article`
+  overflow: hidden;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+`
+
+const ProductVisual = styled.div<{ $tone: string }>`
+  position: relative;
+  height: 240px;
+  background: ${({ $tone }) => $tone};
+`
+
+const Badge = styled.span`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.82);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+`
+
+const ProductInfo = styled.div`
+  padding: 1.15rem 1.15rem 1.35rem;
+`
+
+const ProductName = styled.h4`
+  margin: 0;
+  color: #111827;
+  font-size: 1.04rem;
 `
 
 const ProductPrice = styled.p`
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 0 1rem 1.5rem;
-  color: #e53e3e;
+  margin: 0.5rem 0 0;
+  color: #2563eb;
+  font-size: 1rem;
+  font-weight: 800;
 `
