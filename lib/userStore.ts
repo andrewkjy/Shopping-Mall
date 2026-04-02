@@ -4,9 +4,10 @@ import dbConnect from '@/db/dbConnectSafe'
 import User from '@/db/models/user'
 
 export type StoredUser = {
+  name: string
   username: string
   passwordHash: string
-  age: number
+  birthDate: string
   phone: string
   address: string
 }

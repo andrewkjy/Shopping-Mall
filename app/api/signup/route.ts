@@ -3,10 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createUser, findUserByUsername } from '@/lib/userStore'
 
 type SignupBody = {
+  name?: string
   username?: string
   password?: string
   confirmPassword?: string
-  age?: number
+  birthDate?: string
   phone?: string
   address?: string
 }
@@ -28,15 +29,21 @@ function hashPassword(password: string) {
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as SignupBody
+    const name = body.name?.trim()
     const username = body.username?.trim()
     const password = body.password?.trim()
     const confirmPassword = body.confirmPassword?.trim()
+    const birthDate = body.birthDate?.trim()
     const phone = body.phone?.trim()
     const address = body.address?.trim()
-    const age = Number(body.age)
+    const parsedBirthDate = birthDate ? new Date(birthDate) : null
 
-    if (!username || !password || !confirmPassword || !phone || !address || Number.isNaN(age)) {
+    if (!name || !username || !password || !confirmPassword || !birthDate || !phone || !address) {
       return NextResponse.json({ message: '모든 항목을 입력해주세요.' }, { status: 400 })
+    }
+
+    if (!parsedBirthDate || Number.isNaN(parsedBirthDate.getTime()) || parsedBirthDate > new Date()) {
+      return NextResponse.json({ message: '올바른 생년월일을 입력해주세요.' }, { status: 400 })
     }
 
     if (password !== confirmPassword) {
@@ -61,9 +68,10 @@ export async function POST(request: NextRequest) {
     }
 
     await createUser({
+      name,
       username,
       passwordHash: hashPassword(password),
-      age,
+      birthDate,
       phone,
       address,
     })
