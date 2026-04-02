@@ -1,14 +1,34 @@
-// db\models\user.ts
 import mongoose from 'mongoose'
 
 const UserSchema = new mongoose.Schema(
   {
-    email: { type: String, default: '' },
-    nickname: { type: String, default: '' },
-    profile_image_url: { type: String, default: '' },
-    user_type: { type: String, default: '' },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 4,
+      maxlength: 20,
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    address: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   {
     timestamps: true,
