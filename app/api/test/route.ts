@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import dbConnect from '@/db/dbConnect'
+import dbConnect from '@/db/dbConnectSafe'
 import User from '@/db/models/user'
 
 /**

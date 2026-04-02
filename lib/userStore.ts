@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from 'fs/promises'
 import path from 'path'
-import dbConnect from '@/db/dbConnect'
+import dbConnect from '@/db/dbConnectSafe'
 import User from '@/db/models/user'
 
 export type StoredUser = {
@@ -35,12 +35,20 @@ async function writeFallbackUsers(users: StoredUser[]) {
   await writeFile(fallbackFilePath, JSON.stringify(users, null, 2), 'utf8')
 }
 
+function isTemporaryMongoFailure(error: unknown) {
+  return error instanceof Error && error.message === 'MONGODB_TEMPORARILY_UNAVAILABLE'
+}
+
 export async function findUserByUsername(username: string) {
   try {
     await dbConnect()
     return await User.findOne({ username }).lean<StoredUser | null>()
   } catch (error) {
-    console.error('[userStore] Falling back to file storage while finding user:', error)
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while finding user:', error)
+    }
 
     const users = await readFallbackUsers()
     return users.find((user) => user.username === username) ?? null
@@ -53,7 +61,11 @@ export async function createUser(user: StoredUser) {
     await User.create(user)
     return { storage: 'mongodb' as const }
   } catch (error) {
-    console.error('[userStore] Falling back to file storage while creating user:', error)
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while creating user:', error)
+    }
 
     const users = await readFallbackUsers()
     const exists = users.some((existingUser) => existingUser.username === user.username)
