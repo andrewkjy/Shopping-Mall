@@ -380,7 +380,7 @@ export default function SignUp() {
 
   return (
     <SignUpBox as="form" onSubmit={handleSubmit}>
-      <Brand>MyShoppingMall</Brand>
+      <Brand>SM Mall</Brand>
       <Title>회원가입</Title>
       <Subtitle>아이디 중복 검사를 완료한 뒤 가입할 수 있습니다.</Subtitle>
 

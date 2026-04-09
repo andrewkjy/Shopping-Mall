@@ -20,7 +20,7 @@ export default function ForgetPassword() {
 
   return (
     <ForgetPasswordBox>
-      <Brand>MyShoppingMall</Brand>
+      <Brand>SM Mall</Brand>
       <Title>비밀번호 찾기</Title>
       <Subtitle>가입한 아이디를 입력하면 재설정 안내를 보낼 수 있습니다.</Subtitle>
 

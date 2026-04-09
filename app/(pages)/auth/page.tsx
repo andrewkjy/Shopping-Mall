@@ -43,7 +43,7 @@ function AuthContent() {
   return (
     <Container>
       <LoginBox>
-        <Brand>MyShoppingMall</Brand>
+        <Brand>SM Mall</Brand>
         <Title>로그인</Title>
         <Subtitle>가입한 아이디와 비밀번호로 로그인하세요.</Subtitle>
 
