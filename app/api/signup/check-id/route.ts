@@ -9,11 +9,21 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: '아이디를 입력해주세요.', available: false }, { status: 400 })
     }
 
-    const existingUser = await findUserByUsername(username)
+    const lookupResult = await findUserByUsername(username)
+
+    if (lookupResult.degraded) {
+      return NextResponse.json(
+        {
+          message: '현재 DB 연결 상태가 불안정하여 아이디 중복 확인을 진행할 수 없습니다. 잠시 후 다시 시도해주세요.',
+          available: false,
+        },
+        { status: 503 }
+      )
+    }
 
     return NextResponse.json({
-      available: !existingUser,
-      message: existingUser ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.',
+      available: !lookupResult.user,
+      message: lookupResult.user ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.',
     })
   } catch (error) {
     console.error('[signup/check-id] duplicate check failed:', error)

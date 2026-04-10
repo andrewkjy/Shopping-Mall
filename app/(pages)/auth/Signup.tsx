@@ -23,6 +23,7 @@ declare global {
 
 type FormState = {
   name: string
+  role: 'consumer' | 'seller' | ''
   username: string
   password: string
   confirmPassword: string
@@ -37,6 +38,7 @@ type FieldErrors = Partial<Record<keyof FormState, string>>
 
 const initialForm: FormState = {
   name: '',
+  role: '',
   username: '',
   password: '',
   confirmPassword: '',
@@ -121,6 +123,8 @@ export default function SignUp() {
   const [isSearchingAddress, setIsSearchingAddress] = useState(false)
   const [idChecked, setIdChecked] = useState(false)
   const [idAvailable, setIdAvailable] = useState(false)
+  const [duplicateCheckMessage, setDuplicateCheckMessage] = useState('')
+  const [duplicateCheckTone, setDuplicateCheckTone] = useState<'success' | 'error' | 'neutral'>('neutral')
   const [message, setMessage] = useState('')
   const [messageTone, setMessageTone] = useState<'success' | 'error' | 'neutral'>('neutral')
 
@@ -226,6 +230,8 @@ export default function SignUp() {
     if (field === 'username') {
       setIdChecked(false)
       setIdAvailable(false)
+      setDuplicateCheckMessage('')
+      setDuplicateCheckTone('neutral')
     }
 
     setStatusMessage('', 'neutral')
@@ -237,6 +243,8 @@ export default function SignUp() {
     if (username.length < 4) {
       setIdChecked(false)
       setIdAvailable(false)
+      setDuplicateCheckMessage('아이디는 4자 이상 입력해주세요.')
+      setDuplicateCheckTone('error')
       setStatusMessage('아이디는 4자 이상 입력해주세요.', 'error')
       return
     }
@@ -250,16 +258,22 @@ export default function SignUp() {
       if (!response.ok) {
         setIdChecked(false)
         setIdAvailable(false)
+        setDuplicateCheckMessage(result.message ?? '중복 검사 중 오류가 발생했습니다.')
+        setDuplicateCheckTone('error')
         setStatusMessage(result.message ?? '중복 검사 중 오류가 발생했습니다.', 'error')
         return
       }
 
       setIdChecked(true)
       setIdAvailable(Boolean(result.available))
+      setDuplicateCheckMessage(result.message ?? '중복 검사를 완료했습니다.')
+      setDuplicateCheckTone(result.available ? 'success' : 'error')
       setStatusMessage(result.message ?? '중복 검사를 완료했습니다.', result.available ? 'success' : 'error')
     } catch {
       setIdChecked(false)
       setIdAvailable(false)
+      setDuplicateCheckMessage('중복 검사 중 오류가 발생했습니다.')
+      setDuplicateCheckTone('error')
       setStatusMessage('중복 검사 중 오류가 발생했습니다.', 'error')
     } finally {
       setIsChecking(false)
@@ -273,6 +287,10 @@ export default function SignUp() {
 
     if (!form.name.trim()) {
       nextFieldErrors.name = '이름을 입력해주세요.'
+    }
+
+    if (!form.role) {
+      nextFieldErrors.role = '회원 유형을 선택해주세요.'
     }
 
     if (!form.username.trim()) {
@@ -351,6 +369,7 @@ export default function SignUp() {
         },
         body: JSON.stringify({
           name: form.name.trim(),
+          role: form.role,
           username: form.username.trim(),
           password: form.password,
           confirmPassword: form.confirmPassword,
@@ -398,6 +417,35 @@ export default function SignUp() {
       </FieldGroup>
 
       <FieldGroup>
+        <Label>회원 유형</Label>
+        <RoleOptionRow>
+          <RoleOptionButton
+            type="button"
+            $selected={form.role === 'consumer'}
+            onClick={() => {
+              setForm((prev) => ({ ...prev, role: 'consumer' }))
+              setFieldErrors((prev) => ({ ...prev, role: undefined }))
+              setStatusMessage('', 'neutral')
+            }}
+          >
+            소비자
+          </RoleOptionButton>
+          <RoleOptionButton
+            type="button"
+            $selected={form.role === 'seller'}
+            onClick={() => {
+              setForm((prev) => ({ ...prev, role: 'seller' }))
+              setFieldErrors((prev) => ({ ...prev, role: undefined }))
+              setStatusMessage('', 'neutral')
+            }}
+          >
+            판매자
+          </RoleOptionButton>
+        </RoleOptionRow>
+        {fieldErrors.role && <FieldError>{fieldErrors.role}</FieldError>}
+      </FieldGroup>
+
+      <FieldGroup>
         <Label htmlFor="username">아이디</Label>
         <InlineRow>
           <Input
@@ -413,6 +461,9 @@ export default function SignUp() {
           </CheckButton>
         </InlineRow>
         {fieldErrors.username && <FieldError>{fieldErrors.username}</FieldError>}
+        {!fieldErrors.username && duplicateCheckMessage && (
+          <HelperText $tone={duplicateCheckTone}>{duplicateCheckMessage}</HelperText>
+        )}
       </FieldGroup>
 
       <FieldGroup>
@@ -620,6 +671,16 @@ const AddressInlineRow = styled.div`
   }
 `
 
+const RoleOptionRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+`
+
 const PostalCodeField = styled.div`
   position: relative;
 `
@@ -657,6 +718,20 @@ const CheckButton = styled.button`
     cursor: wait;
     opacity: 0.7;
   }
+`
+
+const RoleOptionButton = styled.button<{ $selected: boolean }>`
+  padding: 0.95rem 1rem;
+  border: 1px solid ${({ $selected }) => ($selected ? '#18181b' : '#d1d5db')};
+  border-radius: 14px;
+  background: ${({ $selected }) => ($selected ? '#18181b' : '#fafafa')};
+  color: ${({ $selected }) => ($selected ? '#ffffff' : '#111827')};
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 `
 
 const ClearIconButton = styled.button`

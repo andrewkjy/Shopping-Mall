@@ -7,6 +7,12 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    role: {
+      type: String,
+      required: true,
+      enum: ['consumer', 'seller'],
+      trim: true,
+    },
     username: {
       type: String,
       required: true,
