@@ -1,6 +1,6 @@
-'use client'
+﻿'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const heroSlides = [
@@ -33,43 +33,40 @@ const heroSlides = [
 const featuredProducts = [
   {
     name: 'Boxy Harrington Jacket',
-    price: '119,000\uC6D0',
+    price: '119,000원',
     tag: 'BEST',
     tone: 'linear-gradient(135deg, #d6d3d1, #78716c)',
   },
   {
     name: 'Premium Oxford Shirt',
-    price: '59,000\uC6D0',
+    price: '59,000원',
     tag: 'NEW',
     tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)',
   },
   {
     name: 'Straight Fit Denim',
-    price: '72,000\uC6D0',
+    price: '72,000원',
     tag: 'HOT',
     tone: 'linear-gradient(135deg, #1f2937, #6b7280)',
   },
   {
     name: 'Leather Derby Shoes',
-    price: '138,000\uC6D0',
+    price: '138,000원',
     tag: 'MD PICK',
     tone: 'linear-gradient(135deg, #44403c, #0f172a)',
   },
 ]
 
 const categories = ['Outer', 'Shirts', 'Denim', 'Slacks', 'Shoes', 'Accessories']
-const headerCategories = [
-  '\uC0C1\uC758',
-  '\uD558\uC758',
-  '\uC790\uCF13',
-  '\uD328\uB529',
-  '\uC2E0\uBC1C',
-  '\uAC00\uBC29',
-  '\uC561\uC138\uC11C\uB9AC',
-]
+const headerCategories = ['상의', '하의', '자켓', '패딩', '신발', '가방', '액세서리']
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [loggedInUsername, setLoggedInUsername] = useState('')
+  const [isNameMenuOpen, setIsNameMenuOpen] = useState(false)
+  const [isIconMenuOpen, setIsIconMenuOpen] = useState(false)
+  const nameMenuRef = useRef<HTMLDivElement | null>(null)
+  const iconMenuRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -79,130 +76,225 @@ export default function Home() {
     return () => window.clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    const storedUser = window.localStorage.getItem('smmall-user')
+
+    if (!storedUser) {
+      setLoggedInUsername('')
+      return
+    }
+
+    try {
+      const parsedUser = JSON.parse(storedUser) as { username?: string }
+      setLoggedInUsername(parsedUser.username ?? '')
+    } catch {
+      setLoggedInUsername('')
+    }
+  }, [])
+
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!nameMenuRef.current?.contains(event.target as Node)) {
+        setIsNameMenuOpen(false)
+      }
+
+      if (!iconMenuRef.current?.contains(event.target as Node)) {
+        setIsIconMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('mousedown', handlePointerDown)
+    return () => window.removeEventListener('mousedown', handlePointerDown)
+  }, [])
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('smmall-user')
+    setLoggedInUsername('')
+    setIsNameMenuOpen(false)
+    setIsIconMenuOpen(false)
+    window.location.href = '/'
+  }
+
   return (
     <PageShell>
-      <Header>
-        <Logo>SM Mall</Logo>
-        <HeaderSearch role="search">
-          <SearchInput
-            type="search"
-            placeholder={'\uC0C1\uD488\uC744 \uAC80\uC0C9\uD574\uBCF4\uC138\uC694'}
-            aria-label={'\uC0C1\uD488 \uAC80\uC0C9'}
-          />
-          <SearchButton type="button" aria-label={'\uAC80\uC0C9'}>
-            <SearchIcon viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M10.5 4.75a5.75 5.75 0 1 0 0 11.5a5.75 5.75 0 0 0 0-11.5Zm-7.25 5.75a7.25 7.25 0 1 1 12.39 5.127l4.49 4.49a.75.75 0 1 1-1.06 1.06l-4.49-4.49A7.25 7.25 0 0 1 3.25 10.5Z"
-                fill="currentColor"
-              />
-            </SearchIcon>
-          </SearchButton>
-        </HeaderSearch>
-        <TopActions>
-          <TopLink href="/auth?type=login">{'\uB85C\uADF8\uC778'}</TopLink>
-          <CartLink href="/cart" aria-label={'\uC7A5\uBC14\uAD6C\uB2C8'}>
-            <CartIcon viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M3.75 4.5a.75.75 0 0 1 0-1.5h1.11c.84 0 1.57.58 1.75 1.41l.18.84h11.85a1.875 1.875 0 0 1 1.83 2.28l-1.03 4.84a2.625 2.625 0 0 1-2.57 2.08H9.53a2.625 2.625 0 0 1-2.57-2.08L5.4 5.25H3.75Zm3.56 2.25l1.12 5.25c.07.34.37.58.72.58h7.32c.34 0 .64-.24.71-.58l1.03-4.84a.375.375 0 0 0-.37-.45H7.31ZM9 18.75a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0Zm8.25 1.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3Z"
-                fill="currentColor"
-              />
-            </CartIcon>
-          </CartLink>
-        </TopActions>
-      </Header>
+      <HomeScale>
+        <Header>
+          <Logo>SM Mall</Logo>
+          <TopActions>
+            {loggedInUsername ? (
+              <>
+                <UserMenuContainer ref={nameMenuRef}>
+                  <UserNameButton
+                    type="button"
+                    onClick={() => {
+                      setIsNameMenuOpen((prev) => !prev)
+                      setIsIconMenuOpen(false)
+                    }}
+                  >
+                    <UserLabel>{loggedInUsername}</UserLabel>
+                  </UserNameButton>
+                  {isNameMenuOpen && (
+                    <UserMenuPanel>
+                      <UserMenuAction type="button" onClick={handleLogout}>
+                        로그아웃
+                      </UserMenuAction>
+                    </UserMenuPanel>
+                  )}
+                </UserMenuContainer>
 
-      <MainContent>
-        <HeroSection>
-          <HeroTrack $index={currentSlide}>
-            {heroSlides.map((slide) => (
-              <HeroSlide key={slide.title} $image={slide.image}>
-                <HeroOverlay />
-                <HeroContent>
-                  <HeroCopy>
-                    <Eyebrow>{slide.tag}</Eyebrow>
-                    <Title>{slide.title}</Title>
-                    <Description>{slide.description}</Description>
-
-                    <CategoryRow>
-                      {categories.map((category) => (
-                        <CategoryChip key={category}>{category}</CategoryChip>
-                      ))}
-                    </CategoryRow>
-                  </HeroCopy>
-                </HeroContent>
-              </HeroSlide>
-            ))}
-          </HeroTrack>
-
-          <HeroNav>
-            <IndicatorRow>
-              {heroSlides.map((slide, index) => (
-                <IndicatorButton
-                  key={slide.title}
-                  type="button"
-                  aria-label={`${index + 1} slide`}
-                  $active={index === currentSlide}
-                  onClick={() => setCurrentSlide(index)}
+                <UserMenuContainer ref={iconMenuRef}>
+                  <UserIconButton
+                    type="button"
+                    aria-label="사용자 메뉴 열기"
+                    onClick={() => {
+                      setIsIconMenuOpen((prev) => !prev)
+                      setIsNameMenuOpen(false)
+                    }}
+                  >
+                    <UserIcon viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M12 12a4 4 0 1 0-4-4a4 4 0 0 0 4 4Zm0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5Z"
+                        fill="currentColor"
+                      />
+                    </UserIcon>
+                  </UserIconButton>
+                  {isIconMenuOpen && (
+                    <UserMenuPanel>
+                      <UserMenuLink href="/account/edit">회원정보 수정</UserMenuLink>
+                      <UserMenuLink href="/account/delete">회원탈퇴</UserMenuLink>
+                    </UserMenuPanel>
+                  )}
+                </UserMenuContainer>
+              </>
+            ) : (
+              <TopLink href="/auth?type=login">로그인</TopLink>
+            )}
+            <CartLink href="/cart" aria-label="장바구니">
+              <CartIcon viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3.75 4.5a.75.75 0 0 1 0-1.5h1.11c.84 0 1.57.58 1.75 1.41l.18.84h11.85a1.875 1.875 0 0 1 1.83 2.28l-1.03 4.84a2.625 2.625 0 0 1-2.57 2.08H9.53a2.625 2.625 0 0 1-2.57-2.08L5.4 5.25H3.75Zm3.56 2.25l1.12 5.25c.07.34.37.58.72.58h7.32c.34 0 .64-.24.71-.58l1.03-4.84a.375.375 0 0 0-.37-.45H7.31ZM9 18.75a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0Zm8.25 1.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3Z"
+                  fill="currentColor"
                 />
+              </CartIcon>
+            </CartLink>
+          </TopActions>
+        </Header>
+
+        <MainContent>
+          <HeaderSearch role="search">
+            <SearchInput type="search" placeholder="상품을 검색해보세요" aria-label="상품 검색" />
+            <SearchButton type="button" aria-label="검색">
+              <SearchIcon viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M10.5 4.75a5.75 5.75 0 1 0 0 11.5a5.75 5.75 0 0 0 0-11.5Zm-7.25 5.75a7.25 7.25 0 1 1 12.39 5.127l4.49 4.49a.75.75 0 1 1-1.06 1.06l-4.49-4.49A7.25 7.25 0 0 1 3.25 10.5Z"
+                  fill="currentColor"
+                />
+              </SearchIcon>
+            </SearchButton>
+          </HeaderSearch>
+
+          <HeroSection>
+            <HeroTrack $index={currentSlide}>
+              {heroSlides.map((slide) => (
+                <HeroSlide key={slide.title} $image={slide.image}>
+                  <HeroOverlay />
+                  <HeroContent>
+                    <HeroCopy>
+                      <Eyebrow>{slide.tag}</Eyebrow>
+                      <Title>{slide.title}</Title>
+                      <Description>{slide.description}</Description>
+
+                      <CategoryRow>
+                        {categories.map((category) => (
+                          <CategoryChip key={category}>{category}</CategoryChip>
+                        ))}
+                      </CategoryRow>
+                    </HeroCopy>
+                  </HeroContent>
+                </HeroSlide>
               ))}
-            </IndicatorRow>
-          </HeroNav>
-        </HeroSection>
+            </HeroTrack>
 
-        <CategoryBar aria-label={'\uC0C1\uD488 \uCE74\uD14C\uACE0\uB9AC'}>
-          {headerCategories.map((category) => (
-            <CategoryBarLink key={category} href="#">
-              {category}
-            </CategoryBarLink>
-          ))}
-        </CategoryBar>
+            <HeroNav>
+              <IndicatorRow>
+                {heroSlides.map((slide, index) => (
+                  <IndicatorButton
+                    key={slide.title}
+                    type="button"
+                    aria-label={`${index + 1} slide`}
+                    $active={index === currentSlide}
+                    onClick={() => setCurrentSlide(index)}
+                  />
+                ))}
+              </IndicatorRow>
+            </HeroNav>
+          </HeroSection>
 
-        <SectionHeader>
-          <SectionTitle>{'\uCD94\uCC9C \uC0C1\uD488'}</SectionTitle>
-          <SectionCaption>
-            {
-              '\uB0A8\uC131 \uC1FC\uD551\uBAB0 \uBA54\uC778 \uD648\uC5D0\uC11C \uBC14\uB85C \uB458\uB7EC\uBCFC \uC218 \uC788\uB294 \uCD94\uCC9C \uC544\uC774\uD15C'
-            }
-          </SectionCaption>
-        </SectionHeader>
+          <CategoryBar aria-label="상품 카테고리">
+            {headerCategories.map((category) => (
+              <CategoryBarLink key={category} href="#">
+                {category}
+              </CategoryBarLink>
+            ))}
+          </CategoryBar>
 
-        <ProductGrid>
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.name}>
-              <ProductVisual $tone={product.tone}>
-                <Badge>{product.tag}</Badge>
-              </ProductVisual>
-              <ProductInfo>
-                <ProductName>{product.name}</ProductName>
-                <ProductPrice>{product.price}</ProductPrice>
-              </ProductInfo>
-            </ProductCard>
-          ))}
-        </ProductGrid>
-      </MainContent>
+          <SectionHeader>
+            <SectionTitle>추천 상품</SectionTitle>
+            <SectionCaption>남성 쇼핑몰 메인 홈에서 바로 둘러볼 수 있는 추천 아이템</SectionCaption>
+          </SectionHeader>
+
+          <ProductGrid>
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.name}>
+                <ProductVisual $tone={product.tone}>
+                  <Badge>{product.tag}</Badge>
+                </ProductVisual>
+                <ProductInfo>
+                  <ProductName>{product.name}</ProductName>
+                  <ProductPrice>{product.price}</ProductPrice>
+                </ProductInfo>
+              </ProductCard>
+            ))}
+          </ProductGrid>
+        </MainContent>
+      </HomeScale>
     </PageShell>
   )
 }
 
 const PageShell = styled.div`
   min-height: 100vh;
+  overflow-x: hidden;
   background: radial-gradient(circle at top left, rgba(120, 113, 108, 0.18), transparent 22%),
     linear-gradient(180deg, #18181b 0%, #292524 28%, #f5f5f4 28%, #f5f5f4 100%);
 `
 
-const Header = styled.header`
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1rem;
-  width: min(1600px, calc(100% - 0.25rem));
-  margin: 0 auto;
-  padding: 1.5rem 0 1rem;
+const HomeScale = styled.div`
+  width: 100%;
+  transform: scale(0.8);
+  transform-origin: top center;
 
   @media (max-width: 860px) {
-    width: calc(100% - 1.5rem);
+    width: 100%;
+    transform: none;
+  }
+`
+
+const Header = styled.header`
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: min(1600px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem 2.5rem 1rem;
+
+  @media (max-width: 860px) {
     grid-template-columns: 1fr;
-    padding-top: 1.25rem;
+    padding: 1.25rem 1rem 1rem;
   }
 `
 
@@ -220,6 +312,7 @@ const HeaderSearch = styled.form`
   gap: 0.65rem;
   width: 100%;
   min-width: 0;
+  margin-bottom: 1rem;
   padding: 0.45rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
@@ -227,8 +320,7 @@ const HeaderSearch = styled.form`
   backdrop-filter: blur(10px);
 
   @media (max-width: 860px) {
-    grid-row: 2;
-    width: 100%;
+    margin-bottom: 0.85rem;
   }
 `
 
@@ -283,6 +375,90 @@ const TopLink = styled.a`
   font-weight: 700;
 `
 
+const UserMenuContainer = styled.div`
+  position: relative;
+  z-index: 20;
+`
+
+const UserNameButton = styled.button`
+  border: none;
+  background: transparent;
+  color: #fafaf9;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+`
+
+const UserIcon = styled.svg`
+  width: 18px;
+  height: 18px;
+`
+
+const UserIconButton = styled.button`
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  color: #fafaf9;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+`
+
+const UserLabel = styled.span`
+  color: #fafaf9;
+  font-weight: 700;
+`
+
+const UserMenuPanel = styled.div`
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  right: 0;
+  z-index: 30;
+  min-width: 152px;
+  padding: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(24, 24, 27, 0.96);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+`
+
+const UserMenuAction = styled.button`
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #fafaf9;
+  text-align: left;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+`
+
+const UserMenuLink = styled.a`
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border-radius: 12px;
+  color: #fafaf9;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+`
+
 const CartLink = styled.a`
   display: grid;
   place-items: center;
@@ -301,12 +477,12 @@ const CartIcon = styled.svg`
 `
 
 const MainContent = styled.main`
-  width: min(1600px, calc(100% - 0.25rem));
+  width: min(1600px, 100%);
   margin: 0 auto;
-  padding: 0.35rem 0 4rem;
+  padding: 0.35rem 2.5rem 4rem;
 
   @media (max-width: 860px) {
-    width: calc(100% - 1.5rem);
+    padding: 0.35rem 1rem 4rem;
   }
 `
 

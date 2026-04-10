@@ -1,12 +1,14 @@
 ﻿'use client'
 
 import { Suspense, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import styled from 'styled-components'
 import SignUp from './Signup'
-import ForgetPassword from './ForgetPass'
+import FindId from './FindId'
+import PasswordResetV2 from './PasswordResetV2'
 
 function AuthContent() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const type = searchParams.get('type')
   const [username, setUsername] = useState('')
@@ -21,7 +23,28 @@ function AuthContent() {
       body: JSON.stringify({ username, password }),
     })
 
-    alert(response.ok ? '로그인에 성공했습니다.' : '로그인에 실패했습니다.')
+    const result = (await response.json()) as {
+      message?: string
+      user?: { username?: string; name?: string; role?: string }
+    }
+
+    if (!response.ok) {
+      alert(result.message ?? '로그인에 실패했습니다.')
+      return
+    }
+
+    if (result.user?.username) {
+      window.localStorage.setItem(
+        'smmall-user',
+        JSON.stringify({
+          username: result.user.username,
+          name: result.user.name ?? '',
+          role: result.user.role ?? '',
+        })
+      )
+    }
+
+    router.push('/')
   }
 
   if (type === 'sign-up') {
@@ -35,7 +58,15 @@ function AuthContent() {
   if (type === 'forgetpass') {
     return (
       <Container>
-        <ForgetPassword />
+        <PasswordResetV2 />
+      </Container>
+    )
+  }
+
+  if (type === 'find-id') {
+    return (
+      <Container>
+        <FindId />
       </Container>
     )
   }
@@ -65,7 +96,8 @@ function AuthContent() {
         </LoginButton>
 
         <Links>
-          <a href="/auth?type=forgetpass">비밀번호를 잊으셨나요?</a>
+          <a href="/auth?type=find-id">아이디를 잃어버리셨나요?</a>
+          <a href="/auth?type=forgetpass">비밀번호를 잃어버리셨나요?</a>
           <a href="/auth?type=sign-up">회원가입 하러가기</a>
         </Links>
       </LoginBox>
