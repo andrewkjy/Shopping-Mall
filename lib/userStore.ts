@@ -78,6 +78,111 @@ export async function findUserByUsername(username: string): Promise<UserLookupRe
   }
 }
 
+export async function findUserByNameAndPhone(name: string, phone: string): Promise<UserLookupResult> {
+  try {
+    console.info(`[userStore] Looking up name="${name}" phone="${phone}" in MongoDB`)
+    await dbConnect()
+    const user = await User.findOne({ name, phone }).lean<StoredUser | null>()
+    console.info(`[userStore] Lookup completed in MongoDB for name="${name}" phone="${phone}" found=${Boolean(user)}`)
+
+    return {
+      user,
+      storage: 'mongodb',
+      degraded: false,
+    }
+  } catch (error) {
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while finding user by profile:', error)
+    }
+
+    const users = await readFallbackUsers()
+    const user = users.find((storedUser) => storedUser.name === name && storedUser.phone === phone) ?? null
+    console.info(`[userStore] Lookup completed in file storage for name="${name}" phone="${phone}" found=${Boolean(user)}`)
+
+    return {
+      user,
+      storage: 'file',
+      degraded: true,
+    }
+  }
+}
+
+export async function findUserByUsernameAndPhone(username: string, phone: string): Promise<UserLookupResult> {
+  try {
+    console.info(`[userStore] Looking up username="${username}" phone="${phone}" in MongoDB`)
+    await dbConnect()
+    const user = await User.findOne({ username, phone }).lean<StoredUser | null>()
+    console.info(
+      `[userStore] Lookup completed in MongoDB for username="${username}" phone="${phone}" found=${Boolean(user)}`
+    )
+
+    return {
+      user,
+      storage: 'mongodb',
+      degraded: false,
+    }
+  } catch (error) {
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while finding user by account:', error)
+    }
+
+    const users = await readFallbackUsers()
+    const user = users.find((storedUser) => storedUser.username === username && storedUser.phone === phone) ?? null
+    console.info(
+      `[userStore] Lookup completed in file storage for username="${username}" phone="${phone}" found=${Boolean(user)}`
+    )
+
+    return {
+      user,
+      storage: 'file',
+      degraded: true,
+    }
+  }
+}
+
+export async function updateUserPassword(username: string, phone: string, passwordHash: string) {
+  try {
+    console.info(`[userStore] Updating password in MongoDB for username="${username}"`)
+    await dbConnect()
+    const updatedUser = await User.findOneAndUpdate({ username, phone }, { passwordHash }, { new: true }).lean<
+      StoredUser | null
+    >()
+
+    if (!updatedUser) {
+      return { updated: false, storage: 'mongodb' as const, degraded: false }
+    }
+
+    console.info(`[userStore] Password updated in MongoDB for username="${username}"`)
+    return { updated: true, storage: 'mongodb' as const, degraded: false }
+  } catch (error) {
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while updating password:', error)
+    }
+
+    const users = await readFallbackUsers()
+    const userIndex = users.findIndex((storedUser) => storedUser.username === username && storedUser.phone === phone)
+
+    if (userIndex === -1) {
+      return { updated: false, storage: 'file' as const, degraded: true }
+    }
+
+    users[userIndex] = {
+      ...users[userIndex],
+      passwordHash,
+    }
+
+    await writeFallbackUsers(users)
+    console.info(`[userStore] Password updated in file storage for username="${username}"`)
+    return { updated: true, storage: 'file' as const, degraded: true }
+  }
+}
+
 export async function createUser(user: StoredUser) {
   try {
     console.info(`[userStore] Creating username="${user.username}" in MongoDB`)

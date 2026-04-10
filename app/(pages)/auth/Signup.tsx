@@ -1,6 +1,7 @@
 ﻿'use client'
 
 import { ChangeEvent, FormEvent, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import styled from 'styled-components'
 
 declare global {
@@ -116,6 +117,7 @@ function loadDaumPostcodeScript() {
 }
 
 export default function SignUp() {
+  const router = useRouter()
   const [form, setForm] = useState<FormState>(initialForm)
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const [isChecking, setIsChecking] = useState(false)
@@ -389,7 +391,10 @@ export default function SignUp() {
       setForm(initialForm)
       setIdChecked(false)
       setIdAvailable(false)
-      setStatusMessage(result.message ?? '회원가입이 완료되었습니다.', 'success')
+      const successMessage = result.message ?? '회원가입이 완료되었습니다.'
+      setStatusMessage(successMessage, 'success')
+      window.alert(successMessage)
+      router.push('/')
     } catch {
       setStatusMessage('회원가입 요청 중 오류가 발생했습니다.', 'error')
     } finally {
