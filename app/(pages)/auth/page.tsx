@@ -34,7 +34,7 @@ function AuthContent() {
     }
 
     if (result.user?.username) {
-      window.localStorage.setItem(
+      window.sessionStorage.setItem(
         'smmall-user',
         JSON.stringify({
           username: result.user.username,

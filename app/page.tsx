@@ -77,7 +77,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const storedUser = window.localStorage.getItem('smmall-user')
+    const storedUser = window.sessionStorage.getItem('smmall-user')
 
     if (!storedUser) {
       setLoggedInUsername('')
@@ -108,7 +108,7 @@ export default function Home() {
   }, [])
 
   const handleLogout = () => {
-    window.localStorage.removeItem('smmall-user')
+    window.sessionStorage.removeItem('smmall-user')
     setLoggedInUsername('')
     setIsNameMenuOpen(false)
     setIsIconMenuOpen(false)
