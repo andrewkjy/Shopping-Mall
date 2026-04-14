@@ -183,6 +183,116 @@ export async function updateUserPassword(username: string, phone: string, passwo
   }
 }
 
+export async function updateUserProfile(
+  username: string,
+  profile: Pick<StoredUser, 'name' | 'birthDate' | 'phone' | 'address'>
+) {
+  try {
+    console.info(`[userStore] Updating profile in MongoDB for username="${username}"`)
+    await dbConnect()
+    const updatedUser = await User.findOneAndUpdate({ username }, profile, { new: true }).lean<StoredUser | null>()
+
+    if (!updatedUser) {
+      return { user: null, storage: 'mongodb' as const, degraded: false }
+    }
+
+    console.info(`[userStore] Profile updated in MongoDB for username="${username}"`)
+    return { user: updatedUser, storage: 'mongodb' as const, degraded: false }
+  } catch (error) {
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while updating profile:', error)
+    }
+
+    const users = await readFallbackUsers()
+    const userIndex = users.findIndex((storedUser) => storedUser.username === username)
+
+    if (userIndex === -1) {
+      return { user: null, storage: 'file' as const, degraded: true }
+    }
+
+    users[userIndex] = {
+      ...users[userIndex],
+      ...profile,
+      username: users[userIndex].username,
+    }
+
+    await writeFallbackUsers(users)
+    console.info(`[userStore] Profile updated in file storage for username="${username}"`)
+    return { user: users[userIndex], storage: 'file' as const, degraded: true }
+  }
+}
+
+export async function updateUserPasswordByUsername(username: string, passwordHash: string) {
+  try {
+    console.info(`[userStore] Updating password in MongoDB for username="${username}"`)
+    await dbConnect()
+    const updatedUser = await User.findOneAndUpdate({ username }, { passwordHash }, { new: true }).lean<StoredUser | null>()
+
+    if (!updatedUser) {
+      return { updated: false, storage: 'mongodb' as const, degraded: false }
+    }
+
+    console.info(`[userStore] Password updated in MongoDB for username="${username}"`)
+    return { updated: true, storage: 'mongodb' as const, degraded: false }
+  } catch (error) {
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while updating password by username:', error)
+    }
+
+    const users = await readFallbackUsers()
+    const userIndex = users.findIndex((storedUser) => storedUser.username === username)
+
+    if (userIndex === -1) {
+      return { updated: false, storage: 'file' as const, degraded: true }
+    }
+
+    users[userIndex] = {
+      ...users[userIndex],
+      passwordHash,
+    }
+
+    await writeFallbackUsers(users)
+    console.info(`[userStore] Password updated in file storage for username="${username}"`)
+    return { updated: true, storage: 'file' as const, degraded: true }
+  }
+}
+
+export async function deleteUserByUsername(username: string) {
+  try {
+    console.info(`[userStore] Deleting user in MongoDB for username="${username}"`)
+    await dbConnect()
+    const deletedUser = await User.findOneAndDelete({ username }).lean<StoredUser | null>()
+
+    if (!deletedUser) {
+      return { deleted: false, storage: 'mongodb' as const, degraded: false }
+    }
+
+    console.info(`[userStore] User deleted in MongoDB for username="${username}"`)
+    return { deleted: true, storage: 'mongodb' as const, degraded: false }
+  } catch (error) {
+    if (isTemporaryMongoFailure(error)) {
+      console.warn('[userStore] Using file storage while MongoDB is cooling down.')
+    } else {
+      console.error('[userStore] Falling back to file storage while deleting user:', error)
+    }
+
+    const users = await readFallbackUsers()
+    const nextUsers = users.filter((storedUser) => storedUser.username !== username)
+
+    if (nextUsers.length === users.length) {
+      return { deleted: false, storage: 'file' as const, degraded: true }
+    }
+
+    await writeFallbackUsers(nextUsers)
+    console.info(`[userStore] User deleted in file storage for username="${username}"`)
+    return { deleted: true, storage: 'file' as const, degraded: true }
+  }
+}
+
 export async function createUser(user: StoredUser) {
   try {
     console.info(`[userStore] Creating username="${user.username}" in MongoDB`)
