@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { Suspense, useState } from 'react'
+import { FormEvent, Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styled from 'styled-components'
 import SignUp from './Signup'
@@ -14,7 +14,9 @@ function AuthContent() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = async () => {
+  const handleLogin = async (event?: FormEvent<HTMLFormElement>) => {
+    event?.preventDefault()
+
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -73,7 +75,7 @@ function AuthContent() {
 
   return (
     <Container>
-      <LoginBox>
+      <LoginBox as="form" onSubmit={handleLogin}>
         <Brand>SM Mall</Brand>
         <Title>로그인</Title>
         <Subtitle>가입한 아이디와 비밀번호로 로그인하세요.</Subtitle>
@@ -91,7 +93,7 @@ function AuthContent() {
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        <LoginButton type="button" onClick={handleLogin}>
+        <LoginButton type="submit">
           로그인
         </LoginButton>
 
