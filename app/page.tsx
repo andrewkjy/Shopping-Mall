@@ -55,13 +55,146 @@ const featuredProducts = [
     tag: 'MD PICK',
     tone: 'linear-gradient(135deg, #44403c, #0f172a)',
   },
+  {
+    name: 'Soft Wool Cardigan',
+    price: '69,000원',
+    tag: '추천',
+    tone: 'linear-gradient(135deg, #ddd6d3, #8b7d77)',
+  },
+  {
+    name: 'Wide Tapered Slacks',
+    price: '54,000원',
+    tag: '인기',
+    tone: 'linear-gradient(135deg, #d6d3d1, #6b7280)',
+  },
+  {
+    name: 'Classic Leather Belt',
+    price: '32,000원',
+    tag: 'NEW',
+    tone: 'linear-gradient(135deg, #44403c, #0f172a)',
+  },
+  {
+    name: 'Daily Knit Tee',
+    price: '39,000원',
+    tag: 'MD',
+    tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)',
+  },
+  {
+    name: 'Signature Denim Shirt',
+    price: '52,000원',
+    tag: '추천',
+    tone: 'linear-gradient(135deg, #bfdbfe, #1d4ed8)',
+  },
+  {
+    name: 'Daily Runner Sneakers',
+    price: '74,000원',
+    tag: '인기',
+    tone: 'linear-gradient(135deg, #d1d5db, #4b5563)',
+  },
+  {
+    name: 'Standard Ball Cap',
+    price: '25,000원',
+    tag: 'NEW',
+    tone: 'linear-gradient(135deg, #fde68a, #d97706)',
+  },
+  {
+    name: 'Layered Long Sleeve Tee',
+    price: '41,000원',
+    tag: 'MD',
+    tone: 'linear-gradient(135deg, #e9d5ff, #7c3aed)',
+  },
+  {
+    name: 'Classic Chino Pants',
+    price: '57,000원',
+    tag: '추천',
+    tone: 'linear-gradient(135deg, #f5e6c8, #b08968)',
+  },
+  {
+    name: 'Half Zip Sweatshirt',
+    price: '63,000원',
+    tag: '인기',
+    tone: 'linear-gradient(135deg, #c7d2fe, #4338ca)',
+  },
+  {
+    name: 'Slim Card Wallet',
+    price: '28,000원',
+    tag: 'NEW',
+    tone: 'linear-gradient(135deg, #d6d3d1, #44403c)',
+  },
+  {
+    name: 'Weekend Canvas Bag',
+    price: '46,000원',
+    tag: 'MD',
+    tone: 'linear-gradient(135deg, #e5e7eb, #9ca3af)',
+  },
+  {
+    name: 'Waffle Knit Henley',
+    price: '43,000원',
+    tag: '추천',
+    tone: 'linear-gradient(135deg, #fed7aa, #c2410c)',
+  },
+  {
+    name: 'Minimal Track Jacket',
+    price: '71,000원',
+    tag: '인기',
+    tone: 'linear-gradient(135deg, #a7f3d0, #047857)',
+  },
+  {
+    name: 'Everyday Socks Set',
+    price: '19,000원',
+    tag: 'NEW',
+    tone: 'linear-gradient(135deg, #f3f4f6, #6b7280)',
+  },
+  {
+    name: 'Soft Touch Hoodie',
+    price: '66,000원',
+    tag: 'MD',
+    tone: 'linear-gradient(135deg, #fecaca, #b91c1c)',
+  },
 ]
 
-const categories = ['Outer', 'Shirts', 'Denim', 'Slacks', 'Shoes', 'Accessories']
-const headerCategories = ['상의', '하의', '자켓', '패딩', '신발', '가방', '액세서리']
+const saleProducts = [
+  { name: 'Overfit Wool Coat', price: '159,000원', detail: '219,000원', tag: '28% OFF', tone: 'linear-gradient(135deg, #d4d4d8, #52525b)' },
+  { name: 'Vintage Blue Denim', price: '49,000원', detail: '79,000원', tag: 'SALE', tone: 'linear-gradient(135deg, #93c5fd, #1d4ed8)' },
+  { name: 'Soft Touch Knit', price: '39,000원', detail: '58,000원', tag: '특가', tone: 'linear-gradient(135deg, #fde68a, #d97706)' },
+  { name: 'Daily Chelsea Boots', price: '99,000원', detail: '149,000원', tag: '32% OFF', tone: 'linear-gradient(135deg, #57534e, #1c1917)' },
+  { name: 'Classic Trench Coat', price: '129,000원', detail: '189,000원', tag: 'SALE', tone: 'linear-gradient(135deg, #d6d3d1, #78716c)' },
+  { name: 'Heavy Cotton Hoodie', price: '45,000원', detail: '69,000원', tag: '35% OFF', tone: 'linear-gradient(135deg, #c7d2fe, #4338ca)' },
+  { name: 'Wide Fit Denim Pants', price: '54,000원', detail: '82,000원', tag: '특가', tone: 'linear-gradient(135deg, #bfdbfe, #2563eb)' },
+  { name: 'Minimal Derby Shoes', price: '87,000원', detail: '126,000원', tag: 'SALE', tone: 'linear-gradient(135deg, #44403c, #111827)' },
+]
+
+const trendingProducts = [
+  { name: 'Loose Fit Oxford Shirt', price: '61,000원', tag: '실시간 인기', tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)' },
+  { name: 'Two-Tuck Wide Slacks', price: '68,000원', tag: '급상승', tone: 'linear-gradient(135deg, #cbd5e1, #475569)' },
+  { name: 'Classic Harrington Jumper', price: '109,000원', tag: '인기 상품', tone: 'linear-gradient(135deg, #d6d3d1, #57534e)' },
+  { name: 'Minimal Runner', price: '84,000원', tag: '베스트', tone: 'linear-gradient(135deg, #e5e7eb, #6b7280)' },
+  { name: 'Daily Waffle Knit', price: '43,000원', tag: '실시간 인기', tone: 'linear-gradient(135deg, #fed7aa, #c2410c)' },
+  { name: 'Relaxed Cargo Pants', price: '72,000원', tag: '급상승', tone: 'linear-gradient(135deg, #d9f99d, #4d7c0f)' },
+  { name: 'Soft Touch Cardigan', price: '58,000원', tag: '인기 상품', tone: 'linear-gradient(135deg, #e9d5ff, #7c3aed)' },
+  { name: 'Classic Backpack', price: '63,000원', tag: '베스트', tone: 'linear-gradient(135deg, #374151, #111827)' },
+]
+
+const accessoryProducts = [
+  { name: 'Silver Buckle Belt', price: '29,000원', tag: 'ACC', tone: 'linear-gradient(135deg, #e5e7eb, #9ca3af)' },
+  { name: 'Classic Leather Wallet', price: '43,000원', tag: '추천', tone: 'linear-gradient(135deg, #78350f, #451a03)' },
+  { name: 'Vintage Ball Cap', price: '27,000원', tag: 'NEW', tone: 'linear-gradient(135deg, #fecaca, #b91c1c)' },
+  { name: 'Canvas Cross Bag', price: '46,000원', tag: 'MD', tone: 'linear-gradient(135deg, #ddd6d3, #78716c)' },
+  { name: 'Minimal Card Wallet', price: '24,000원', tag: 'ACC', tone: 'linear-gradient(135deg, #d6d3d1, #44403c)' },
+  { name: 'Daily Beanie', price: '21,000원', tag: '추천', tone: 'linear-gradient(135deg, #cbd5e1, #475569)' },
+  { name: 'Nylon Shoulder Bag', price: '39,000원', tag: 'NEW', tone: 'linear-gradient(135deg, #bfdbfe, #1d4ed8)' },
+  { name: 'Metal Key Holder', price: '18,000원', tag: 'MD', tone: 'linear-gradient(135deg, #f3f4f6, #6b7280)' },
+]
+
+const categories = ['SHOES', 'TOP', 'PANTS', 'OUTER', 'BAG', 'HAT', 'ACCESSORIES']
+const headerCategories = ['SHOES', 'TOP', 'PANTS', 'OUTER', 'BAG', 'HAT', 'ACCESSORIES']
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [featuredPage, setFeaturedPage] = useState(0)
+  const [salePage, setSalePage] = useState(0)
+  const [trendingPage, setTrendingPage] = useState(0)
+  const [accessoryPage, setAccessoryPage] = useState(0)
   const [loggedInUsername, setLoggedInUsername] = useState('')
   const [isNameMenuOpen, setIsNameMenuOpen] = useState(false)
   const [isIconMenuOpen, setIsIconMenuOpen] = useState(false)
@@ -114,6 +247,28 @@ export default function Home() {
     setIsIconMenuOpen(false)
     window.location.href = '/'
   }
+
+  const featuredPageSize = 4
+  const featuredTotalPages = Math.ceil(featuredProducts.length / featuredPageSize)
+  const visibleFeaturedProducts = featuredProducts.slice(
+    featuredPage * featuredPageSize,
+    (featuredPage + 1) * featuredPageSize
+  )
+  const salePageSize = 4
+  const saleTotalPages = Math.ceil(saleProducts.length / salePageSize)
+  const visibleSaleProducts = saleProducts.slice(salePage * salePageSize, (salePage + 1) * salePageSize)
+  const trendingPageSize = 4
+  const trendingTotalPages = Math.ceil(trendingProducts.length / trendingPageSize)
+  const visibleTrendingProducts = trendingProducts.slice(
+    trendingPage * trendingPageSize,
+    (trendingPage + 1) * trendingPageSize
+  )
+  const accessoryPageSize = 4
+  const accessoryTotalPages = Math.ceil(accessoryProducts.length / accessoryPageSize)
+  const visibleAccessoryProducts = accessoryProducts.slice(
+    accessoryPage * accessoryPageSize,
+    (accessoryPage + 1) * accessoryPageSize
+  )
 
   return (
     <PageShell>
@@ -193,6 +348,14 @@ export default function Home() {
             </SearchButton>
           </HeaderSearch>
 
+          <CategoryBar aria-label="상품 카테고리">
+            {headerCategories.map((category) => (
+              <CategoryBarLink key={category} href="#">
+                {category}
+              </CategoryBarLink>
+            ))}
+          </CategoryBar>
+
           <HeroSection>
             <HeroTrack $index={currentSlide}>
               {heroSlides.map((slide) => (
@@ -230,21 +393,156 @@ export default function Home() {
             </HeroNav>
           </HeroSection>
 
-          <CategoryBar aria-label="상품 카테고리">
-            {headerCategories.map((category) => (
-              <CategoryBarLink key={category} href="#">
-                {category}
-              </CategoryBarLink>
-            ))}
-          </CategoryBar>
-
           <SectionHeader>
             <SectionTitle>추천 상품</SectionTitle>
-            <SectionCaption>남성 쇼핑몰 메인 홈에서 바로 둘러볼 수 있는 추천 아이템</SectionCaption>
+            <SectionControls>
+              <SectionPageIndicator>
+                {featuredPage + 1}/{featuredTotalPages}
+              </SectionPageIndicator>
+              <SectionArrowButton
+                type="button"
+                onClick={() => setFeaturedPage((prev) => Math.max(0, prev - 1))}
+                disabled={featuredPage === 0}
+                aria-label="이전 추천 상품 보기"
+              >
+                &lt;
+              </SectionArrowButton>
+              <SectionArrowButton
+                type="button"
+                onClick={() => setFeaturedPage((prev) => Math.min(featuredTotalPages - 1, prev + 1))}
+                disabled={featuredPage === featuredTotalPages - 1}
+                aria-label="다음 추천 상품 보기"
+              >
+                &gt;
+              </SectionArrowButton>
+            </SectionControls>
           </SectionHeader>
 
           <ProductGrid>
-            {featuredProducts.map((product) => (
+            {visibleFeaturedProducts.map((product) => (
+              <ProductCard key={product.name}>
+                <ProductVisual $tone={product.tone}>
+                  <Badge>{product.tag}</Badge>
+                </ProductVisual>
+                <ProductInfo>
+                  <ProductName>{product.name}</ProductName>
+                  <ProductPrice>{product.price}</ProductPrice>
+                </ProductInfo>
+              </ProductCard>
+            ))}
+          </ProductGrid>
+
+          <SplitSection>
+            <FeatureColumn>
+              <SectionMiniHeader>
+                <SectionMiniTitle>할인 중인 상품</SectionMiniTitle>
+                <SectionControls>
+                  <SectionPageIndicator>
+                    {salePage + 1}/{saleTotalPages}
+                  </SectionPageIndicator>
+                  <SectionArrowButton
+                    type="button"
+                    onClick={() => setSalePage((prev) => Math.max(0, prev - 1))}
+                    disabled={salePage === 0}
+                    aria-label="이전 할인 상품 보기"
+                  >
+                    &lt;
+                  </SectionArrowButton>
+                  <SectionArrowButton
+                    type="button"
+                    onClick={() => setSalePage((prev) => Math.min(saleTotalPages - 1, prev + 1))}
+                    disabled={salePage === saleTotalPages - 1}
+                    aria-label="다음 할인 상품 보기"
+                  >
+                    &gt;
+                  </SectionArrowButton>
+                </SectionControls>
+              </SectionMiniHeader>
+              <SaleGrid>
+                {visibleSaleProducts.map((product) => (
+                  <SaleCard key={product.name}>
+                    <SaleVisual $tone={product.tone}>
+                      <MiniBadge>{product.tag}</MiniBadge>
+                    </SaleVisual>
+                    <SaleInfo>
+                      <MiniName>{product.name}</MiniName>
+                      <SalePriceRow>
+                        <MiniPrice>{product.price}</MiniPrice>
+                        <MiniMuted>{product.detail}</MiniMuted>
+                      </SalePriceRow>
+                    </SaleInfo>
+                  </SaleCard>
+                ))}
+              </SaleGrid>
+            </FeatureColumn>
+
+            <FeatureColumn>
+              <SectionMiniHeader>
+                <SectionMiniTitle>지금 인기 있는 상품</SectionMiniTitle>
+                <SectionControls>
+                  <SectionPageIndicator>
+                    {trendingPage + 1}/{trendingTotalPages}
+                  </SectionPageIndicator>
+                  <SectionArrowButton
+                    type="button"
+                    onClick={() => setTrendingPage((prev) => Math.max(0, prev - 1))}
+                    disabled={trendingPage === 0}
+                    aria-label="이전 인기 상품 보기"
+                  >
+                    &lt;
+                  </SectionArrowButton>
+                  <SectionArrowButton
+                    type="button"
+                    onClick={() => setTrendingPage((prev) => Math.min(trendingTotalPages - 1, prev + 1))}
+                    disabled={trendingPage === trendingTotalPages - 1}
+                    aria-label="다음 인기 상품 보기"
+                  >
+                    &gt;
+                  </SectionArrowButton>
+                </SectionControls>
+              </SectionMiniHeader>
+              <MiniList>
+                {visibleTrendingProducts.map((product) => (
+                  <MiniListCard key={product.name}>
+                    <MiniThumb $tone={product.tone} />
+                    <MiniMeta>
+                      <MiniTag>{product.tag}</MiniTag>
+                      <MiniName>{product.name}</MiniName>
+                      <MiniPrice>{product.price}</MiniPrice>
+                    </MiniMeta>
+                  </MiniListCard>
+                ))}
+              </MiniList>
+            </FeatureColumn>
+          </SplitSection>
+
+          <SectionHeader>
+            <SectionTitle>액세서리 추천</SectionTitle>
+            <SectionControls>
+              <SectionPageIndicator>
+                {accessoryPage + 1}/{accessoryTotalPages}
+              </SectionPageIndicator>
+              <SectionArrowButton
+                type="button"
+                onClick={() => setAccessoryPage((prev) => Math.max(0, prev - 1))}
+                disabled={accessoryPage === 0}
+                aria-label="이전 액세서리 보기"
+              >
+                &lt;
+              </SectionArrowButton>
+              <SectionArrowButton
+                type="button"
+                onClick={() => setAccessoryPage((prev) => Math.min(accessoryTotalPages - 1, prev + 1))}
+                disabled={accessoryPage === accessoryTotalPages - 1}
+                aria-label="다음 액세서리 보기"
+              >
+                &gt;
+              </SectionArrowButton>
+            </SectionControls>
+          </SectionHeader>
+
+          <ProductGrid>
+            {visibleAccessoryProducts.map((product) => (
               <ProductCard key={product.name}>
                 <ProductVisual $tone={product.tone}>
                   <Badge>{product.tag}</Badge>
@@ -266,7 +564,7 @@ const PageShell = styled.div`
   min-height: 100vh;
   overflow-x: hidden;
   background: radial-gradient(circle at top left, rgba(120, 113, 108, 0.18), transparent 22%),
-    linear-gradient(180deg, #18181b 0%, #292524 28%, #f5f5f4 28%, #f5f5f4 100%);
+    linear-gradient(180deg, #18181b 0%, #292524 163px, #f5f5f4 163px, #f5f5f4 100%);
 `
 
 const HomeScale = styled.div`
@@ -312,7 +610,7 @@ const HeaderSearch = styled.form`
   gap: 0.65rem;
   width: 100%;
   min-width: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   padding: 0.45rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
@@ -479,10 +777,10 @@ const CartIcon = styled.svg`
 const MainContent = styled.main`
   width: min(1600px, 100%);
   margin: 0 auto;
-  padding: 0.35rem 2.5rem 4rem;
+  padding: 0 2.5rem 4rem;
 
   @media (max-width: 860px) {
-    padding: 0.35rem 1rem 4rem;
+    padding: 0 1rem 4rem;
   }
 `
 
@@ -599,27 +897,41 @@ const HeroNav = styled.div`
 const CategoryBar = styled.nav`
   display: flex;
   justify-content: center;
-  gap: 1.35rem;
-  margin-top: 1rem;
-  padding: 0.2rem 0 0.5rem;
+  gap: 2.25rem;
+  margin-top: 0;
+  margin-bottom: 1.15rem;
+  padding: 0.15rem 0 0.2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media (max-width: 960px) {
     justify-content: flex-start;
-    overflow-x: auto;
     white-space: nowrap;
   }
 `
 
 const CategoryBarLink = styled.a`
   flex: 0 0 auto;
-  color: #2f2a27;
+  color: #fafaf9;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.24rem;
   font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
 
   &:hover {
-    color: #111827;
+    transform: translateY(-1px);
+    color: #ffffff;
+    opacity: 0.86;
   }
 `
 
@@ -662,6 +974,37 @@ const SectionCaption = styled.p`
   color: #57534e;
 `
 
+const SectionControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+`
+
+const SectionPageIndicator = styled.span`
+  min-width: 42px;
+  color: #44403c;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+`
+
+const SectionArrowButton = styled.button`
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d6d3d1;
+  border-radius: 10px;
+  background: white;
+  color: #18181b;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+`
+
 const ProductGrid = styled.section`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -675,6 +1018,142 @@ const ProductGrid = styled.section`
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
   }
+`
+
+const SplitSection = styled.section`
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const FeatureColumn = styled.div`
+  display: grid;
+  gap: 1rem;
+`
+
+const SectionMiniTitle = styled.h3`
+  margin: 0;
+  color: #111827;
+  font-size: 1.5rem;
+`
+
+const SectionMiniHeader = styled.div`
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    align-items: start;
+  }
+`
+
+const SaleGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const SaleCard = styled.article`
+  overflow: hidden;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #e7e5e4;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.06);
+`
+
+const SaleVisual = styled.div<{ $tone: string }>`
+  position: relative;
+  height: 220px;
+  background: ${({ $tone }) => $tone};
+`
+
+const SaleInfo = styled.div`
+  padding: 1rem 1rem 1.2rem;
+`
+
+const SalePriceRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin-top: 0.55rem;
+`
+
+const MiniMuted = styled.span`
+  color: #a8a29e;
+  font-size: 0.9rem;
+  text-decoration: line-through;
+`
+
+const MiniList = styled.div`
+  display: grid;
+  gap: 1rem;
+`
+
+const MiniListCard = styled.article`
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #e7e5e4;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.06);
+`
+
+const MiniThumb = styled.div<{ $tone: string }>`
+  min-height: 120px;
+  border-radius: 18px;
+  background: ${({ $tone }) => $tone};
+`
+
+const MiniMeta = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+`
+
+const MiniTag = styled.span`
+  color: #78716c;
+  font-size: 0.82rem;
+  font-weight: 800;
+`
+
+const MiniName = styled.h4`
+  margin: 0;
+  color: #111827;
+  font-size: 1rem;
+`
+
+const MiniPrice = styled.p`
+  margin: 0;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 800;
+`
+
+const MiniBadge = styled.span`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(12, 10, 9, 0.88);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
 `
 
 const ProductCard = styled.article`
