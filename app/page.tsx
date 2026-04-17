@@ -1,7 +1,10 @@
 ﻿'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+
+import StoreTopBand from './components/StoreTopBand'
+import { mainCategoryLabels } from '@/lib/storefrontData'
 
 const heroSlides = [
   {
@@ -31,126 +34,22 @@ const heroSlides = [
 ]
 
 const featuredProducts = [
-  {
-    name: 'Boxy Harrington Jacket',
-    price: '119,000원',
-    tag: 'BEST',
-    tone: 'linear-gradient(135deg, #d6d3d1, #78716c)',
-  },
-  {
-    name: 'Premium Oxford Shirt',
-    price: '59,000원',
-    tag: 'NEW',
-    tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)',
-  },
-  {
-    name: 'Straight Fit Denim',
-    price: '72,000원',
-    tag: 'HOT',
-    tone: 'linear-gradient(135deg, #1f2937, #6b7280)',
-  },
-  {
-    name: 'Leather Derby Shoes',
-    price: '138,000원',
-    tag: 'MD PICK',
-    tone: 'linear-gradient(135deg, #44403c, #0f172a)',
-  },
-  {
-    name: 'Soft Wool Cardigan',
-    price: '69,000원',
-    tag: '추천',
-    tone: 'linear-gradient(135deg, #ddd6d3, #8b7d77)',
-  },
-  {
-    name: 'Wide Tapered Slacks',
-    price: '54,000원',
-    tag: '인기',
-    tone: 'linear-gradient(135deg, #d6d3d1, #6b7280)',
-  },
-  {
-    name: 'Classic Leather Belt',
-    price: '32,000원',
-    tag: 'NEW',
-    tone: 'linear-gradient(135deg, #44403c, #0f172a)',
-  },
-  {
-    name: 'Daily Knit Tee',
-    price: '39,000원',
-    tag: 'MD',
-    tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)',
-  },
-  {
-    name: 'Signature Denim Shirt',
-    price: '52,000원',
-    tag: '추천',
-    tone: 'linear-gradient(135deg, #bfdbfe, #1d4ed8)',
-  },
-  {
-    name: 'Daily Runner Sneakers',
-    price: '74,000원',
-    tag: '인기',
-    tone: 'linear-gradient(135deg, #d1d5db, #4b5563)',
-  },
-  {
-    name: 'Standard Ball Cap',
-    price: '25,000원',
-    tag: 'NEW',
-    tone: 'linear-gradient(135deg, #fde68a, #d97706)',
-  },
-  {
-    name: 'Layered Long Sleeve Tee',
-    price: '41,000원',
-    tag: 'MD',
-    tone: 'linear-gradient(135deg, #e9d5ff, #7c3aed)',
-  },
-  {
-    name: 'Classic Chino Pants',
-    price: '57,000원',
-    tag: '추천',
-    tone: 'linear-gradient(135deg, #f5e6c8, #b08968)',
-  },
-  {
-    name: 'Half Zip Sweatshirt',
-    price: '63,000원',
-    tag: '인기',
-    tone: 'linear-gradient(135deg, #c7d2fe, #4338ca)',
-  },
-  {
-    name: 'Slim Card Wallet',
-    price: '28,000원',
-    tag: 'NEW',
-    tone: 'linear-gradient(135deg, #d6d3d1, #44403c)',
-  },
-  {
-    name: 'Weekend Canvas Bag',
-    price: '46,000원',
-    tag: 'MD',
-    tone: 'linear-gradient(135deg, #e5e7eb, #9ca3af)',
-  },
-  {
-    name: 'Waffle Knit Henley',
-    price: '43,000원',
-    tag: '추천',
-    tone: 'linear-gradient(135deg, #fed7aa, #c2410c)',
-  },
-  {
-    name: 'Minimal Track Jacket',
-    price: '71,000원',
-    tag: '인기',
-    tone: 'linear-gradient(135deg, #a7f3d0, #047857)',
-  },
-  {
-    name: 'Everyday Socks Set',
-    price: '19,000원',
-    tag: 'NEW',
-    tone: 'linear-gradient(135deg, #f3f4f6, #6b7280)',
-  },
-  {
-    name: 'Soft Touch Hoodie',
-    price: '66,000원',
-    tag: 'MD',
-    tone: 'linear-gradient(135deg, #fecaca, #b91c1c)',
-  },
+  { name: 'Boxy Harrington Jacket', price: '119,000원', tag: 'BEST', tone: 'linear-gradient(135deg, #d6d3d1, #78716c)' },
+  { name: 'Premium Oxford Shirt', price: '59,000원', tag: 'NEW', tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)' },
+  { name: 'Straight Fit Denim', price: '72,000원', tag: 'HOT', tone: 'linear-gradient(135deg, #1f2937, #6b7280)' },
+  { name: 'Leather Derby Shoes', price: '138,000원', tag: 'MD PICK', tone: 'linear-gradient(135deg, #44403c, #0f172a)' },
+  { name: 'Soft Wool Cardigan', price: '69,000원', tag: '추천', tone: 'linear-gradient(135deg, #ddd6d3, #8b7d77)' },
+  { name: 'Wide Tapered Slacks', price: '54,000원', tag: '인기', tone: 'linear-gradient(135deg, #d6d3d1, #6b7280)' },
+  { name: 'Classic Leather Belt', price: '32,000원', tag: 'NEW', tone: 'linear-gradient(135deg, #44403c, #0f172a)' },
+  { name: 'Daily Knit Tee', price: '39,000원', tag: 'MD', tone: 'linear-gradient(135deg, #f5f5f4, #a8a29e)' },
+  { name: 'Signature Denim Shirt', price: '52,000원', tag: '추천', tone: 'linear-gradient(135deg, #bfdbfe, #1d4ed8)' },
+  { name: 'Daily Runner Sneakers', price: '74,000원', tag: '인기', tone: 'linear-gradient(135deg, #d1d5db, #4b5563)' },
+  { name: 'Standard Ball Cap', price: '25,000원', tag: 'NEW', tone: 'linear-gradient(135deg, #fde68a, #d97706)' },
+  { name: 'Layered Long Sleeve Tee', price: '41,000원', tag: 'MD', tone: 'linear-gradient(135deg, #e9d5ff, #7c3aed)' },
+  { name: 'Classic Chino Pants', price: '57,000원', tag: '추천', tone: 'linear-gradient(135deg, #f5e6c8, #b08968)' },
+  { name: 'Half Zip Sweatshirt', price: '63,000원', tag: '인기', tone: 'linear-gradient(135deg, #c7d2fe, #4338ca)' },
+  { name: 'Slim Card Wallet', price: '28,000원', tag: 'NEW', tone: 'linear-gradient(135deg, #d6d3d1, #44403c)' },
+  { name: 'Weekend Canvas Bag', price: '46,000원', tag: 'MD', tone: 'linear-gradient(135deg, #e5e7eb, #9ca3af)' },
 ]
 
 const saleProducts = [
@@ -186,20 +85,12 @@ const accessoryProducts = [
   { name: 'Metal Key Holder', price: '18,000원', tag: 'MD', tone: 'linear-gradient(135deg, #f3f4f6, #6b7280)' },
 ]
 
-const categories = ['SHOES', 'TOP', 'PANTS', 'OUTER', 'BAG', 'HAT', 'ACCESSORIES']
-const headerCategories = ['SHOES', 'TOP', 'PANTS', 'OUTER', 'BAG', 'HAT', 'ACCESSORIES']
-
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [featuredPage, setFeaturedPage] = useState(0)
   const [salePage, setSalePage] = useState(0)
   const [trendingPage, setTrendingPage] = useState(0)
   const [accessoryPage, setAccessoryPage] = useState(0)
-  const [loggedInUsername, setLoggedInUsername] = useState('')
-  const [isNameMenuOpen, setIsNameMenuOpen] = useState(false)
-  const [isIconMenuOpen, setIsIconMenuOpen] = useState(false)
-  const nameMenuRef = useRef<HTMLDivElement | null>(null)
-  const iconMenuRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -209,153 +100,26 @@ export default function Home() {
     return () => window.clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    const storedUser = window.sessionStorage.getItem('smmall-user')
-
-    if (!storedUser) {
-      setLoggedInUsername('')
-      return
-    }
-
-    try {
-      const parsedUser = JSON.parse(storedUser) as { username?: string }
-      setLoggedInUsername(parsedUser.username ?? '')
-    } catch {
-      setLoggedInUsername('')
-    }
-  }, [])
-
-  useEffect(() => {
-    const handlePointerDown = (event: MouseEvent) => {
-      if (!nameMenuRef.current?.contains(event.target as Node)) {
-        setIsNameMenuOpen(false)
-      }
-
-      if (!iconMenuRef.current?.contains(event.target as Node)) {
-        setIsIconMenuOpen(false)
-      }
-    }
-
-    window.addEventListener('mousedown', handlePointerDown)
-    return () => window.removeEventListener('mousedown', handlePointerDown)
-  }, [])
-
-  const handleLogout = () => {
-    window.sessionStorage.removeItem('smmall-user')
-    setLoggedInUsername('')
-    setIsNameMenuOpen(false)
-    setIsIconMenuOpen(false)
-    window.location.href = '/'
-  }
-
   const featuredPageSize = 4
-  const featuredTotalPages = Math.ceil(featuredProducts.length / featuredPageSize)
-  const visibleFeaturedProducts = featuredProducts.slice(
-    featuredPage * featuredPageSize,
-    (featuredPage + 1) * featuredPageSize
-  )
   const salePageSize = 4
-  const saleTotalPages = Math.ceil(saleProducts.length / salePageSize)
-  const visibleSaleProducts = saleProducts.slice(salePage * salePageSize, (salePage + 1) * salePageSize)
   const trendingPageSize = 4
-  const trendingTotalPages = Math.ceil(trendingProducts.length / trendingPageSize)
-  const visibleTrendingProducts = trendingProducts.slice(
-    trendingPage * trendingPageSize,
-    (trendingPage + 1) * trendingPageSize
-  )
   const accessoryPageSize = 4
+
+  const featuredTotalPages = Math.ceil(featuredProducts.length / featuredPageSize)
+  const saleTotalPages = Math.ceil(saleProducts.length / salePageSize)
+  const trendingTotalPages = Math.ceil(trendingProducts.length / trendingPageSize)
   const accessoryTotalPages = Math.ceil(accessoryProducts.length / accessoryPageSize)
-  const visibleAccessoryProducts = accessoryProducts.slice(
-    accessoryPage * accessoryPageSize,
-    (accessoryPage + 1) * accessoryPageSize
-  )
+
+  const visibleFeaturedProducts = featuredProducts.slice(featuredPage * featuredPageSize, (featuredPage + 1) * featuredPageSize)
+  const visibleSaleProducts = saleProducts.slice(salePage * salePageSize, (salePage + 1) * salePageSize)
+  const visibleTrendingProducts = trendingProducts.slice(trendingPage * trendingPageSize, (trendingPage + 1) * trendingPageSize)
+  const visibleAccessoryProducts = accessoryProducts.slice(accessoryPage * accessoryPageSize, (accessoryPage + 1) * accessoryPageSize)
 
   return (
     <PageShell>
-      <HomeScale>
-        <Header>
-          <Logo>SM Mall</Logo>
-          <TopActions>
-            {loggedInUsername ? (
-              <>
-                <UserMenuContainer ref={nameMenuRef}>
-                  <UserNameButton
-                    type="button"
-                    onClick={() => {
-                      setIsNameMenuOpen((prev) => !prev)
-                      setIsIconMenuOpen(false)
-                    }}
-                  >
-                    <UserLabel>{loggedInUsername}</UserLabel>
-                  </UserNameButton>
-                  {isNameMenuOpen && (
-                    <UserMenuPanel>
-                      <UserMenuAction type="button" onClick={handleLogout}>
-                        로그아웃
-                      </UserMenuAction>
-                    </UserMenuPanel>
-                  )}
-                </UserMenuContainer>
-
-                <UserMenuContainer ref={iconMenuRef}>
-                  <UserIconButton
-                    type="button"
-                    aria-label="사용자 메뉴 열기"
-                    onClick={() => {
-                      setIsIconMenuOpen((prev) => !prev)
-                      setIsNameMenuOpen(false)
-                    }}
-                  >
-                    <UserIcon viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        d="M12 12a4 4 0 1 0-4-4a4 4 0 0 0 4 4Zm0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5Z"
-                        fill="currentColor"
-                      />
-                    </UserIcon>
-                  </UserIconButton>
-                  {isIconMenuOpen && (
-                    <UserMenuPanel>
-                      <UserMenuLink href="/account/edit">회원정보 수정</UserMenuLink>
-                      <UserMenuLink href="/account/delete">회원탈퇴</UserMenuLink>
-                    </UserMenuPanel>
-                  )}
-                </UserMenuContainer>
-              </>
-            ) : (
-              <TopLink href="/auth?type=login">로그인</TopLink>
-            )}
-            <CartLink href="/cart" aria-label="장바구니">
-              <CartIcon viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M3.75 4.5a.75.75 0 0 1 0-1.5h1.11c.84 0 1.57.58 1.75 1.41l.18.84h11.85a1.875 1.875 0 0 1 1.83 2.28l-1.03 4.84a2.625 2.625 0 0 1-2.57 2.08H9.53a2.625 2.625 0 0 1-2.57-2.08L5.4 5.25H3.75Zm3.56 2.25l1.12 5.25c.07.34.37.58.72.58h7.32c.34 0 .64-.24.71-.58l1.03-4.84a.375.375 0 0 0-.37-.45H7.31ZM9 18.75a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0Zm8.25 1.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3Z"
-                  fill="currentColor"
-                />
-              </CartIcon>
-            </CartLink>
-          </TopActions>
-        </Header>
-
+      <StoreTopBand />
+      <ContentScale>
         <MainContent>
-          <HeaderSearch role="search">
-            <SearchInput type="search" placeholder="상품을 검색해보세요" aria-label="상품 검색" />
-            <SearchButton type="button" aria-label="검색">
-              <SearchIcon viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M10.5 4.75a5.75 5.75 0 1 0 0 11.5a5.75 5.75 0 0 0 0-11.5Zm-7.25 5.75a7.25 7.25 0 1 1 12.39 5.127l4.49 4.49a.75.75 0 1 1-1.06 1.06l-4.49-4.49A7.25 7.25 0 0 1 3.25 10.5Z"
-                  fill="currentColor"
-                />
-              </SearchIcon>
-            </SearchButton>
-          </HeaderSearch>
-
-          <CategoryBar aria-label="상품 카테고리">
-            {headerCategories.map((category) => (
-              <CategoryBarLink key={category} href="#">
-                {category}
-              </CategoryBarLink>
-            ))}
-          </CategoryBar>
-
           <HeroSection>
             <HeroTrack $index={currentSlide}>
               {heroSlides.map((slide) => (
@@ -366,9 +130,8 @@ export default function Home() {
                       <Eyebrow>{slide.tag}</Eyebrow>
                       <Title>{slide.title}</Title>
                       <Description>{slide.description}</Description>
-
                       <CategoryRow>
-                        {categories.map((category) => (
+                        {mainCategoryLabels.map((category) => (
                           <CategoryChip key={category}>{category}</CategoryChip>
                         ))}
                       </CategoryRow>
@@ -377,7 +140,6 @@ export default function Home() {
                 </HeroSlide>
               ))}
             </HeroTrack>
-
             <HeroNav>
               <IndicatorRow>
                 {heroSlides.map((slide, index) => (
@@ -396,25 +158,9 @@ export default function Home() {
           <SectionHeader>
             <SectionTitle>추천 상품</SectionTitle>
             <SectionControls>
-              <SectionPageIndicator>
-                {featuredPage + 1}/{featuredTotalPages}
-              </SectionPageIndicator>
-              <SectionArrowButton
-                type="button"
-                onClick={() => setFeaturedPage((prev) => Math.max(0, prev - 1))}
-                disabled={featuredPage === 0}
-                aria-label="이전 추천 상품 보기"
-              >
-                &lt;
-              </SectionArrowButton>
-              <SectionArrowButton
-                type="button"
-                onClick={() => setFeaturedPage((prev) => Math.min(featuredTotalPages - 1, prev + 1))}
-                disabled={featuredPage === featuredTotalPages - 1}
-                aria-label="다음 추천 상품 보기"
-              >
-                &gt;
-              </SectionArrowButton>
+              <SectionPageIndicator>{featuredPage + 1}/{featuredTotalPages}</SectionPageIndicator>
+              <SectionArrowButton type="button" onClick={() => setFeaturedPage((prev) => Math.max(0, prev - 1))} disabled={featuredPage === 0}>&lt;</SectionArrowButton>
+              <SectionArrowButton type="button" onClick={() => setFeaturedPage((prev) => Math.min(featuredTotalPages - 1, prev + 1))} disabled={featuredPage === featuredTotalPages - 1}>&gt;</SectionArrowButton>
             </SectionControls>
           </SectionHeader>
 
@@ -437,25 +183,9 @@ export default function Home() {
               <SectionMiniHeader>
                 <SectionMiniTitle>할인 중인 상품</SectionMiniTitle>
                 <SectionControls>
-                  <SectionPageIndicator>
-                    {salePage + 1}/{saleTotalPages}
-                  </SectionPageIndicator>
-                  <SectionArrowButton
-                    type="button"
-                    onClick={() => setSalePage((prev) => Math.max(0, prev - 1))}
-                    disabled={salePage === 0}
-                    aria-label="이전 할인 상품 보기"
-                  >
-                    &lt;
-                  </SectionArrowButton>
-                  <SectionArrowButton
-                    type="button"
-                    onClick={() => setSalePage((prev) => Math.min(saleTotalPages - 1, prev + 1))}
-                    disabled={salePage === saleTotalPages - 1}
-                    aria-label="다음 할인 상품 보기"
-                  >
-                    &gt;
-                  </SectionArrowButton>
+                  <SectionPageIndicator>{salePage + 1}/{saleTotalPages}</SectionPageIndicator>
+                  <SectionArrowButton type="button" onClick={() => setSalePage((prev) => Math.max(0, prev - 1))} disabled={salePage === 0}>&lt;</SectionArrowButton>
+                  <SectionArrowButton type="button" onClick={() => setSalePage((prev) => Math.min(saleTotalPages - 1, prev + 1))} disabled={salePage === saleTotalPages - 1}>&gt;</SectionArrowButton>
                 </SectionControls>
               </SectionMiniHeader>
               <SaleGrid>
@@ -480,25 +210,9 @@ export default function Home() {
               <SectionMiniHeader>
                 <SectionMiniTitle>지금 인기 있는 상품</SectionMiniTitle>
                 <SectionControls>
-                  <SectionPageIndicator>
-                    {trendingPage + 1}/{trendingTotalPages}
-                  </SectionPageIndicator>
-                  <SectionArrowButton
-                    type="button"
-                    onClick={() => setTrendingPage((prev) => Math.max(0, prev - 1))}
-                    disabled={trendingPage === 0}
-                    aria-label="이전 인기 상품 보기"
-                  >
-                    &lt;
-                  </SectionArrowButton>
-                  <SectionArrowButton
-                    type="button"
-                    onClick={() => setTrendingPage((prev) => Math.min(trendingTotalPages - 1, prev + 1))}
-                    disabled={trendingPage === trendingTotalPages - 1}
-                    aria-label="다음 인기 상품 보기"
-                  >
-                    &gt;
-                  </SectionArrowButton>
+                  <SectionPageIndicator>{trendingPage + 1}/{trendingTotalPages}</SectionPageIndicator>
+                  <SectionArrowButton type="button" onClick={() => setTrendingPage((prev) => Math.max(0, prev - 1))} disabled={trendingPage === 0}>&lt;</SectionArrowButton>
+                  <SectionArrowButton type="button" onClick={() => setTrendingPage((prev) => Math.min(trendingTotalPages - 1, prev + 1))} disabled={trendingPage === trendingTotalPages - 1}>&gt;</SectionArrowButton>
                 </SectionControls>
               </SectionMiniHeader>
               <MiniList>
@@ -519,25 +233,9 @@ export default function Home() {
           <SectionHeader>
             <SectionTitle>액세서리 추천</SectionTitle>
             <SectionControls>
-              <SectionPageIndicator>
-                {accessoryPage + 1}/{accessoryTotalPages}
-              </SectionPageIndicator>
-              <SectionArrowButton
-                type="button"
-                onClick={() => setAccessoryPage((prev) => Math.max(0, prev - 1))}
-                disabled={accessoryPage === 0}
-                aria-label="이전 액세서리 보기"
-              >
-                &lt;
-              </SectionArrowButton>
-              <SectionArrowButton
-                type="button"
-                onClick={() => setAccessoryPage((prev) => Math.min(accessoryTotalPages - 1, prev + 1))}
-                disabled={accessoryPage === accessoryTotalPages - 1}
-                aria-label="다음 액세서리 보기"
-              >
-                &gt;
-              </SectionArrowButton>
+              <SectionPageIndicator>{accessoryPage + 1}/{accessoryTotalPages}</SectionPageIndicator>
+              <SectionArrowButton type="button" onClick={() => setAccessoryPage((prev) => Math.max(0, prev - 1))} disabled={accessoryPage === 0}>&lt;</SectionArrowButton>
+              <SectionArrowButton type="button" onClick={() => setAccessoryPage((prev) => Math.min(accessoryTotalPages - 1, prev + 1))} disabled={accessoryPage === accessoryTotalPages - 1}>&gt;</SectionArrowButton>
             </SectionControls>
           </SectionHeader>
 
@@ -555,7 +253,7 @@ export default function Home() {
             ))}
           </ProductGrid>
         </MainContent>
-      </HomeScale>
+      </ContentScale>
     </PageShell>
   )
 }
@@ -563,223 +261,28 @@ export default function Home() {
 const PageShell = styled.div`
   min-height: 100vh;
   overflow-x: hidden;
-  background: radial-gradient(circle at top left, rgba(120, 113, 108, 0.18), transparent 22%),
-    linear-gradient(180deg, #18181b 0%, #292524 163px, #f5f5f4 163px, #f5f5f4 100%);
+  background: #f5f5f4;
 `
 
-const HomeScale = styled.div`
+const ContentScale = styled.div`
   width: 100%;
   transform: scale(0.8);
   transform-origin: top center;
+  will-change: transform;
 
   @media (max-width: 860px) {
-    width: 100%;
     transform: none;
   }
-`
-
-const Header = styled.header`
-  position: relative;
-  z-index: 5;
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  width: min(1600px, 100%);
-  margin: 0 auto;
-  padding: 1.5rem 2.5rem 1rem;
-
-  @media (max-width: 860px) {
-    grid-template-columns: 1fr;
-    padding: 1.25rem 1rem 1rem;
-  }
-`
-
-const Logo = styled.h1`
-  margin: 0;
-  color: #fafaf9;
-  font-size: 1.9rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-`
-
-const HeaderSearch = styled.form`
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  width: 100%;
-  min-width: 0;
-  margin-bottom: 0.85rem;
-  padding: 0.45rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-
-  @media (max-width: 860px) {
-    margin-bottom: 0.85rem;
-  }
-`
-
-const SearchInput = styled.input`
-  flex: 1;
-  min-width: 0;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #fafaf9;
-  font-size: 1rem;
-  padding: 0.78rem 1rem;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.56);
-  }
-`
-
-const SearchButton = styled.button`
-  border: none;
-  border-radius: 999px;
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  background: #fafaf9;
-  color: #18181b;
-  font-weight: 800;
-  cursor: pointer;
-`
-
-const SearchIcon = styled.svg`
-  width: 18px;
-  height: 18px;
-`
-
-const TopActions = styled.nav`
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  justify-self: end;
-
-  @media (max-width: 860px) {
-    justify-self: start;
-  }
-`
-
-const TopLink = styled.a`
-  color: #fafaf9;
-  text-decoration: none;
-  font-weight: 700;
-`
-
-const UserMenuContainer = styled.div`
-  position: relative;
-  z-index: 20;
-`
-
-const UserNameButton = styled.button`
-  border: none;
-  background: transparent;
-  color: #fafaf9;
-  padding: 0;
-  cursor: pointer;
-  font: inherit;
-`
-
-const UserIcon = styled.svg`
-  width: 18px;
-  height: 18px;
-`
-
-const UserIconButton = styled.button`
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  color: #fafaf9;
-  background: rgba(255, 255, 255, 0.06);
-  cursor: pointer;
-`
-
-const UserLabel = styled.span`
-  color: #fafaf9;
-  font-weight: 700;
-`
-
-const UserMenuPanel = styled.div`
-  position: absolute;
-  top: calc(100% + 0.7rem);
-  right: 0;
-  z-index: 30;
-  min-width: 152px;
-  padding: 0.45rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 18px;
-  background: rgba(24, 24, 27, 0.96);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(10px);
-`
-
-const UserMenuAction = styled.button`
-  display: block;
-  width: 100%;
-  padding: 0.8rem 0.9rem;
-  border: none;
-  border-radius: 12px;
-  background: transparent;
-  color: #fafaf9;
-  text-align: left;
-  font-size: 0.92rem;
-  font-weight: 700;
-  cursor: pointer;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-  }
-`
-
-const UserMenuLink = styled.a`
-  display: block;
-  width: 100%;
-  padding: 0.8rem 0.9rem;
-  border-radius: 12px;
-  color: #fafaf9;
-  text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 700;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-  }
-`
-
-const CartLink = styled.a`
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-  color: #fafaf9;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.06);
-`
-
-const CartIcon = styled.svg`
-  width: 18px;
-  height: 18px;
 `
 
 const MainContent = styled.main`
   width: min(1600px, 100%);
   margin: 0 auto;
+  margin-top: 3.11rem;
   padding: 0 2.5rem 4rem;
 
   @media (max-width: 860px) {
+    margin-top: 2.4rem;
     padding: 0 1rem 4rem;
   }
 `
@@ -884,54 +387,11 @@ const HeroNav = styled.div`
   z-index: 2;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
 
   @media (max-width: 720px) {
     right: 1.35rem;
     bottom: 1.1rem;
     left: 1.35rem;
-  }
-`
-
-const CategoryBar = styled.nav`
-  display: flex;
-  justify-content: center;
-  gap: 2.25rem;
-  margin-top: 0;
-  margin-bottom: 1.15rem;
-  padding: 0.15rem 0 0.2rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (max-width: 960px) {
-    justify-content: flex-start;
-    white-space: nowrap;
-  }
-`
-
-const CategoryBarLink = styled.a`
-  flex: 0 0 auto;
-  color: #fafaf9;
-  text-decoration: none;
-  font-size: 1.24rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition:
-    transform 0.2s ease,
-    color 0.2s ease,
-    opacity 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    color: #ffffff;
-    opacity: 0.86;
   }
 `
 
@@ -967,11 +427,6 @@ const SectionTitle = styled.h3`
   margin: 0;
   color: #111827;
   font-size: 2rem;
-`
-
-const SectionCaption = styled.p`
-  margin: 0;
-  color: #57534e;
 `
 
 const SectionControls = styled.div`
@@ -1036,12 +491,6 @@ const FeatureColumn = styled.div`
   gap: 1rem;
 `
 
-const SectionMiniTitle = styled.h3`
-  margin: 0;
-  color: #111827;
-  font-size: 1.5rem;
-`
-
 const SectionMiniHeader = styled.div`
   display: flex;
   align-items: end;
@@ -1052,6 +501,12 @@ const SectionMiniHeader = styled.div`
     flex-direction: column;
     align-items: start;
   }
+`
+
+const SectionMiniTitle = styled.h3`
+  margin: 0;
+  color: #111827;
+  font-size: 1.5rem;
 `
 
 const SaleGrid = styled.div`
@@ -1199,3 +654,4 @@ const ProductPrice = styled.p`
   font-size: 1rem;
   font-weight: 800;
 `
+
